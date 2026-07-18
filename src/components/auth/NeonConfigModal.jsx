@@ -46,11 +46,11 @@ export default function NeonConfigModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-      <div className="w-full max-w-lg glass-card bg-[#0b0f19]/95 border border-white/10 rounded-3xl p-6 shadow-2xl relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
+      <div className="w-full max-w-lg glass-card bg-[#121214] border border-[#27272a] rounded-3xl p-6 shadow-2xl relative animate-scale-in">
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white"
+          className="absolute top-5 right-5 w-8 h-8 rounded-full bg-[#18181b] border border-[#27272a] flex items-center justify-center text-zinc-400 hover:text-zinc-100 interactive-element"
         >
           <X className="w-4 h-4" />
         </button>
@@ -60,15 +60,15 @@ export default function NeonConfigModal({ isOpen, onClose }) {
             <Server className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="font-bold font-['Outfit'] text-lg text-white">Neon Serverless Postgres</h3>
-            <p className="text-xs text-slate-400">Sync data via Vercel Serverless Functions (`@neondatabase/serverless`).</p>
+            <h3 className="font-bold font-['Outfit'] text-lg text-zinc-100">Neon Serverless Postgres</h3>
+            <p className="text-xs text-zinc-400">Sync all your personal modules across devices 100% free.</p>
           </div>
         </div>
 
         <form onSubmit={handleTestAndSave} className="space-y-4">
-          <div className="bg-slate-900/80 border border-white/10 rounded-2xl p-4 space-y-3">
+          <div className="bg-[#18181b] border border-[#27272a] rounded-2xl p-4 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-white">Enable Neon Cloud Sync</span>
+              <span className="text-xs font-bold text-zinc-100">Enable Neon Cloud Sync</span>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input
                   type="checkbox"
@@ -76,18 +76,18 @@ export default function NeonConfigModal({ isOpen, onClose }) {
                   onChange={(e) => setEnabled(e.target.checked)}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                <div className="w-11 h-6 bg-[#27272a] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
               </label>
             </div>
 
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] text-zinc-400">
               When disabled or offline, UNItrack runs automatically via instant local `IndexedDB` storage with zero data loss.
             </p>
           </div>
 
           {enabled && (
             <div>
-              <label className="text-xs text-slate-300 font-medium block mb-1">
+              <label className="text-xs text-zinc-300 font-medium block mb-1">
                 Neon Connection String (`DATABASE_URL`)
               </label>
               <input
@@ -95,9 +95,9 @@ export default function NeonConfigModal({ isOpen, onClose }) {
                 placeholder="postgres://user:pass@ep-xxxx.neon.tech/dbname?sslmode=require"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                className="w-full bg-slate-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-emerald-500"
+                className="w-full bg-[#18181b] border border-[#27272a] rounded-xl px-3.5 py-2.5 text-xs text-zinc-100 font-mono focus:outline-none focus:border-emerald-500"
               />
-              <p className="text-[10px] text-slate-500 mt-1">
+              <p className="text-[10px] text-zinc-500 mt-1">
                 Found in your Neon Dashboard under Connection Details (use pooled or direct string).
               </p>
             </div>
@@ -107,15 +107,15 @@ export default function NeonConfigModal({ isOpen, onClose }) {
             <div
               className={`p-3 rounded-xl flex items-center space-x-2 text-xs font-medium border ${
                 status.state === 'testing'
-                  ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-300'
+                  ? 'bg-zinc-800 border-zinc-700 text-zinc-300'
                   : status.state === 'success'
-                  ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
-                  : 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+                  ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300'
+                  : 'bg-red-500/15 border-red-500/30 text-red-300'
               }`}
             >
-              {status.state === 'testing' && <RefreshCw className="w-4 h-4 animate-spin shrink-0" />}
+              {status.state === 'testing' && <RefreshCw className="w-4 h-4 animate-spin shrink-0 text-emerald-400" />}
               {status.state === 'success' && <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />}
-              {status.state === 'error' && <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />}
+              {status.state === 'error' && <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />}
               <span>{status.message}</span>
             </div>
           )}
@@ -124,13 +124,13 @@ export default function NeonConfigModal({ isOpen, onClose }) {
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white"
+              className="px-4 py-2.5 rounded-xl text-xs font-semibold text-zinc-400 hover:text-zinc-100 interactive-element"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 font-bold rounded-xl text-xs shadow-md hover:brightness-110 active:scale-95 transition-all"
+              className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-extrabold rounded-xl text-xs shadow-sm interactive-element"
             >
               {enabled ? 'Test Connection & Save' : 'Save Configuration'}
             </button>

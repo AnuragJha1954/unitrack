@@ -1,4 +1,5 @@
 import Dexie from 'dexie';
+import { compressImageToWebP } from '../utils/imageCompressor';
 
 // Initialize local offline IndexedDB cache via Dexie
 export const localDB = new Dexie('UNItrackDB');
@@ -113,6 +114,41 @@ class DBService {
     );
 
     return newUser;
+  }
+
+  async purgeDemoAndClean() {
+    try {
+      const demoEmails = ['guest.tracker@unitrack.app'];
+      const allUsers = await localDB.users.toArray();
+      const demoUsers = allUsers.filter(u => 
+        demoEmails.includes(u.email) || 
+        u.name?.includes('Demo') || 
+        u.name?.includes('Alex') || 
+        u.id?.includes('demo') || 
+        u.email?.includes('guest')
+      );
+
+      const demoUserIds = demoUsers.map(u => u.id);
+      if (demoUserIds.length > 0) {
+        for (const uid of demoUserIds) {
+          await localDB.transactions.where('user_id').equals(uid).delete();
+          await localDB.subscriptions.where('user_id').equals(uid).delete();
+          await localDB.tasks.where('user_id').equals(uid).delete();
+          await localDB.workouts.where('user_id').equals(uid).delete();
+          await localDB.diet_plans.where('user_id').equals(uid).delete();
+          await localDB.users.delete(uid);
+
+          await this.runNeonQuery('DELETE FROM transactions WHERE user_id = $1', [uid]);
+          await this.runNeonQuery('DELETE FROM subscriptions WHERE user_id = $1', [uid]);
+          await this.runNeonQuery('DELETE FROM tasks WHERE user_id = $1', [uid]);
+          await this.runNeonQuery('DELETE FROM workouts WHERE user_id = $1', [uid]);
+          await this.runNeonQuery('DELETE FROM diet_plans WHERE user_id = $1', [uid]);
+          await this.runNeonQuery('DELETE FROM users WHERE id = $1', [uid]);
+        }
+      }
+    } catch (e) {
+      console.warn('Purge error:', e);
+    }
   }
 
   // ==========================================
@@ -343,11 +379,14 @@ class DBService {
       }
     }
 
+    // Automatically compress to ultra-lightweight WebP (~30KB) for 100% FREE built-in storage
+    const compressedImage = await compressImageToWebP(imageData, 900, 900, 0.75);
+
     const plan = {
       id: 'dpl_' + Date.now() + Math.random().toString(36).substr(2, 5),
       user_id: userId,
       title: title || 'Diet Chart ' + new Date().toLocaleDateString(),
-      image_data: imageData,
+      image_data: compressedImage,
       upload_date: uploadDate || new Date().toISOString().split('T')[0],
       is_active: isActive,
       created_at: new Date().toISOString()

@@ -184,7 +184,7 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
       </div>
 
       {/* Sub-Tabs Selector */}
-      <div className="flex bg-slate-900/80 p-1.5 rounded-2xl border border-white/10 max-w-md mx-auto">
+      <div className="flex bg-[#18181b] p-1.5 rounded-2xl border border-[#27272a] max-w-md mx-auto">
         {[
           { id: 'transactions', label: 'Transactions', icon: DollarSign },
           { id: 'subscriptions', label: 'Subscriptions', icon: RefreshCw },
@@ -196,8 +196,8 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
             <button
               key={tab.id}
               onClick={() => setSubTab(tab.id)}
-              className={`flex-1 py-2 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 transition-all ${
-                isActive ? 'bg-emerald-500 text-slate-950 shadow-lg' : 'text-slate-400 hover:text-white'
+              className={`flex-1 py-2 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 interactive-element ${
+                isActive ? 'bg-emerald-500 text-zinc-950 shadow-sm font-bold' : 'text-zinc-400 hover:text-zinc-100'
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -298,7 +298,7 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
             </div>
             <button
               onClick={() => setShowSubForm(!showSubForm)}
-              className="px-3.5 py-2 bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 font-bold text-xs rounded-xl shadow-md hover:brightness-110 active:scale-95 transition-all flex items-center gap-1"
+              className="px-3.5 py-2 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs rounded-xl shadow-sm interactive-element flex items-center gap-1"
             >
               <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>{showSubForm ? 'Close Form' : 'Add Subscription'}</span>
@@ -380,12 +380,12 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
                 return (
                   <div
                     key={s.id}
-                    className={`glass-card rounded-2xl p-4 border transition-all flex flex-col justify-between ${
+                    className={`glass-card glass-card-hover rounded-2xl p-4 flex flex-col justify-between ${
                       isDueSoon
-                        ? 'border-amber-500/60 bg-amber-500/5 neon-glow-cyan'
+                        ? 'border-emerald-500/50 bg-[#18181b] animate-pulse-subtle'
                         : isOverdue
-                        ? 'border-rose-500/60 bg-rose-500/5'
-                        : 'border-white/10'
+                        ? 'border-red-500/50 bg-[#18181b]'
+                        : 'border-[#27272a]'
                     }`}
                   >
                     <div className="flex items-start justify-between">
@@ -402,8 +402,8 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
 
                     <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs">
                       <div className="flex items-center space-x-1.5">
-                        <Calendar className={`w-3.5 h-3.5 ${isDueSoon ? 'text-amber-400 animate-pulse' : 'text-slate-400'}`} />
-                        <span className={isDueSoon ? 'text-amber-300 font-bold' : isOverdue ? 'text-rose-400 font-bold' : 'text-slate-300'}>
+                        <Calendar className={`w-3.5 h-3.5 ${isDueSoon ? 'text-emerald-400' : 'text-zinc-400'}`} />
+                        <span className={isDueSoon ? 'text-emerald-300 font-bold' : isOverdue ? 'text-red-400 font-bold' : 'text-zinc-300'}>
                           Due: {s.next_due_date} ({isOverdue ? `${Math.abs(diffDays)}d overdue` : diffDays === 0 ? 'Today!' : `in ${diffDays}d`})
                         </span>
                       </div>

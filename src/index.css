@@ -2,18 +2,19 @@
 
 @layer base {
   :root {
-    --bg-dark: #090d16;
-    --card-dark: #111827;
-    --card-border: #1f2937;
+    --bg-dark: #09090b;
+    --card-dark: #121214;
+    --card-border: #27272a;
+    --accent: #10b981;
   }
 
   * {
-    border-color: #1f2937;
+    border-color: #27272a;
   }
 
   body {
-    background-color: #090d16;
-    color: #f3f4f6;
+    background-color: #09090b;
+    color: #f4f4f5;
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -26,47 +27,98 @@
   }
 }
 
-/* Minimalist & Authentic Solid Cards (No Transparent / Blur for daily clarity) */
+/* Minimalist Monochrome Cards with Subtle Interactive Animations */
 .glass-card {
-  background: #111827;
-  border: 1px solid #1f2937;
+  background: #121214;
+  border: 1px solid #27272a;
   border-radius: 1.25rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.4);
 }
 
 .glass-card-hover {
-  transition: all 0.15s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .glass-card-hover:hover {
-  border-color: #374151;
-  background: #151d2f;
+  border-color: #3f3f46;
+  background: #18181b;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.6);
 }
 
-/* Subtle accent helpers (No harsh neon glows) */
+/* Micro-animations and Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulseSubtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-pulse-subtle {
+  animation: pulseSubtle 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Interactive element hover & active bounce */
+.interactive-element {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.interactive-element:hover {
+  filter: brightness(1.15);
+}
+.interactive-element:active {
+  transform: scale(0.96);
+}
+
+/* Strip out all neon glows */
 .neon-glow-cyan, .neon-glow-emerald, .neon-glow-purple {
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Sleek Dark Zinc */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: #09090b;
 }
 ::-webkit-scrollbar-thumb {
-  background: #374151;
+  background: #27272a;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #4b5563;
+  background: #3f3f46;
 }
 
 /* Clean Strikethrough Animation for Tasks */
 .task-strikethrough {
   position: relative;
-  color: #6b7280;
+  color: #71717a;
+  transition: color 0.3s ease;
 }
 .task-strikethrough::after {
   content: '';
@@ -75,7 +127,8 @@
   left: 0;
   width: 100%;
   height: 1.5px;
-  background: #6b7280;
+  background: #71717a;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Safe Area Padding for Android/Mobile Bottom Nav */

@@ -21,19 +21,21 @@ function MainApp() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0b0f19] flex flex-col items-center justify-center space-y-4">
-        <div className="relative w-16 h-16 rounded-3xl bg-gradient-to-tr from-cyan-500 via-emerald-500 to-purple-500 p-[2px] animate-spin">
-          <div className="w-full h-full bg-[#0b0f19] rounded-3xl flex items-center justify-center" />
+      <div className="min-h-screen bg-[#09090b] flex flex-col items-center justify-center space-y-4">
+        <div className="relative w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 p-[2px] animate-pulse flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center font-bold text-zinc-950 font-['Outfit'] text-base">
+            U
+          </div>
         </div>
-        <p className="text-sm font-bold font-['Outfit'] text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 animate-pulse">
-          Loading UNItrack Personal Ecosystem...
+        <p className="text-xs font-bold font-['Outfit'] text-zinc-400 animate-pulse tracking-wide">
+          Loading UNItrack...
         </p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-slate-100 flex flex-col selection:bg-cyan-500 selection:text-black">
+    <div className="min-h-screen bg-[#09090b] text-zinc-100 flex flex-col selection:bg-emerald-500 selection:text-zinc-950">
       {/* Top Header */}
       <Header
         onOpenAuth={() => setAuthModalOpen(true)}

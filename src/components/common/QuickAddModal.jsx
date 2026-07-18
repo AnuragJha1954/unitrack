@@ -22,8 +22,8 @@ export default function QuickAddModal({ isOpen, onClose }) {
   const [taskPriority, setTaskPriority] = useState('medium');
 
   // Gym form state
-  const [exerciseName, setExerciseName] = useState('Bench Press');
-  const [sets, setSets] = useState([{ reps: '10', weight: '60' }, { reps: '8', weight: '65' }]);
+  const [exerciseName, setExerciseName] = useState('');
+  const [sets, setSets] = useState([{ reps: '', weight: '' }]);
 
   // Diet form state
   const [dietTitle, setDietTitle] = useState('');
@@ -32,7 +32,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   const handleAddSet = () => {
-    const last = sets[sets.length - 1] || { reps: '10', weight: '50' };
+    const last = sets[sets.length - 1] || { reps: '', weight: '' };
     setSets([...sets, { reps: last.reps, weight: last.weight }]);
   };
 
@@ -131,7 +131,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
         </div>
 
         {/* Module Selector Tabs */}
-        <div className="grid grid-cols-4 p-2 gap-1.5 bg-slate-900 border-b border-[#1f2937]">
+        <div className="grid grid-cols-4 p-2 gap-1.5 bg-[#18181b] border-b border-[#27272a]">
           {[
             { id: 'transaction', label: 'Finance', icon: DollarSign },
             { id: 'task', label: 'Task', icon: CheckSquare },
@@ -144,13 +144,13 @@ export default function QuickAddModal({ isOpen, onClose }) {
               <button
                 key={t.id}
                 onClick={() => setTab(t.id)}
-                className={`py-2 px-1 rounded-xl text-xs font-medium flex flex-col sm:flex-row items-center justify-center gap-1.5 transition-all ${
+                className={`py-2 px-1 rounded-xl text-xs font-medium flex flex-col sm:flex-row items-center justify-center gap-1.5 interactive-element ${
                   isActive
-                    ? 'bg-slate-800 border border-[#1f2937] text-emerald-400 font-semibold'
-                    : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
+                    ? 'bg-[#121214] border border-[#27272a] text-emerald-400 font-bold'
+                    : 'text-zinc-400 hover:bg-[#121214] hover:text-zinc-100'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-400' : 'text-slate-400'}`} />
+                <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-400 animate-scale-in' : 'text-zinc-400'}`} />
                 <span>{t.label}</span>
               </button>
             );
@@ -161,12 +161,12 @@ export default function QuickAddModal({ isOpen, onClose }) {
         <form onSubmit={handleSubmit} className="p-5 overflow-y-auto space-y-4 flex-1">
           {tab === 'transaction' && (
             <>
-              <div className="flex bg-slate-900 p-1 rounded-xl border border-[#1f2937]">
+              <div className="flex bg-[#18181b] p-1 rounded-xl border border-[#27272a]">
                 <button
                   type="button"
                   onClick={() => setTxType('expense')}
-                  className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
-                    txType === 'expense' ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40' : 'text-slate-400'
+                  className={`flex-1 py-2 rounded-lg text-xs font-bold interactive-element ${
+                    txType === 'expense' ? 'bg-red-500/20 text-red-400 border border-red-500/40' : 'text-zinc-400 hover:text-zinc-100'
                   }`}
                 >
                   Expense (-)
@@ -174,8 +174,8 @@ export default function QuickAddModal({ isOpen, onClose }) {
                 <button
                   type="button"
                   onClick={() => setTxType('income')}
-                  className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
-                    txType === 'income' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'text-slate-400'
+                  className={`flex-1 py-2 rounded-lg text-xs font-bold interactive-element ${
+                    txType === 'income' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'text-zinc-400 hover:text-zinc-100'
                   }`}
                 >
                   Income (+)
@@ -183,7 +183,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <label className="text-xs text-slate-400 font-medium block mb-1">Amount ($)</label>
+                <label className="text-xs text-zinc-400 font-medium block mb-1">Amount ($)</label>
                 <input
                   type="number"
                   step="0.01"
@@ -191,17 +191,17 @@ export default function QuickAddModal({ isOpen, onClose }) {
                   placeholder="0.00"
                   value={txAmount}
                   onChange={(e) => setTxAmount(e.target.value)}
-                  className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-4 py-3 text-lg font-bold text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-[#18181b] border border-[#27272a] rounded-xl px-4 py-3 text-lg font-bold text-zinc-100 focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs text-slate-400 font-medium block mb-1">Category</label>
+                  <label className="text-xs text-zinc-400 font-medium block mb-1">Category</label>
                   <select
                     value={txCategory}
                     onChange={(e) => setTxCategory(e.target.value)}
-                    className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-[#18181b] border border-[#27272a] rounded-xl px-3 py-2.5 text-sm text-zinc-100 focus:outline-none focus:border-emerald-500"
                   >
                     <option value="food">🍔 Food & Dining</option>
                     <option value="transport">🚗 Transport</option>
@@ -213,24 +213,24 @@ export default function QuickAddModal({ isOpen, onClose }) {
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs text-slate-400 font-medium block mb-1">Date</label>
+                  <label className="text-xs text-zinc-400 font-medium block mb-1">Date</label>
                   <input
                     type="date"
                     value={txDate}
                     onChange={(e) => setTxDate(e.target.value)}
-                    className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-[#18181b] border border-[#27272a] rounded-xl px-3 py-2.5 text-sm text-zinc-100 focus:outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs text-slate-400 font-medium block mb-1">Note (Optional)</label>
+                <label className="text-xs text-zinc-400 font-medium block mb-1">Note (Optional)</label>
                 <input
                   type="text"
                   placeholder="e.g. Groceries"
                   value={txNote}
                   onChange={(e) => setTxNote(e.target.value)}
-                  className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-[#18181b] border border-[#27272a] rounded-xl px-4 py-2.5 text-sm text-zinc-100 focus:outline-none focus:border-emerald-500"
                 />
               </div>
             </>
@@ -239,33 +239,33 @@ export default function QuickAddModal({ isOpen, onClose }) {
           {tab === 'task' && (
             <>
               <div>
-                <label className="text-xs text-slate-400 font-medium block mb-1">Task Title *</label>
+                <label className="text-xs text-zinc-400 font-medium block mb-1">Task Title *</label>
                 <input
                   type="text"
                   required
                   placeholder="What needs to be done?"
                   value={taskTitle}
                   onChange={(e) => setTaskTitle(e.target.value)}
-                  className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-4 py-3 text-base font-semibold text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-[#18181b] border border-[#27272a] rounded-xl px-4 py-3 text-base font-semibold text-zinc-100 focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs text-slate-400 font-medium block mb-1">Due Date</label>
+                  <label className="text-xs text-zinc-400 font-medium block mb-1">Due Date</label>
                   <input
                     type="date"
                     value={taskDate}
                     onChange={(e) => setTaskDate(e.target.value)}
-                    className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-[#18181b] border border-[#27272a] rounded-xl px-3 py-2.5 text-sm text-zinc-100 focus:outline-none focus:border-emerald-500"
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-slate-400 font-medium block mb-1">Priority</label>
+                  <label className="text-xs text-zinc-400 font-medium block mb-1">Priority</label>
                   <select
                     value={taskPriority}
                     onChange={(e) => setTaskPriority(e.target.value)}
-                    className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-[#18181b] border border-[#27272a] rounded-xl px-3 py-2.5 text-sm text-zinc-100 focus:outline-none focus:border-emerald-500"
                   >
                     <option value="high">🔥 High Priority</option>
                     <option value="medium">⚡ Medium Priority</option>
@@ -275,13 +275,13 @@ export default function QuickAddModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <label className="text-xs text-slate-400 font-medium block mb-1">Description (Optional)</label>
+                <label className="text-xs text-zinc-400 font-medium block mb-1">Description (Optional)</label>
                 <textarea
                   rows={2}
                   placeholder="Add extra notes or sub-tasks..."
                   value={taskDesc}
                   onChange={(e) => setTaskDesc(e.target.value)}
-                  className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-[#18181b] border border-[#27272a] rounded-xl px-4 py-2.5 text-sm text-zinc-100 focus:outline-none focus:border-emerald-500"
                 />
               </div>
             </>
@@ -290,24 +290,24 @@ export default function QuickAddModal({ isOpen, onClose }) {
           {tab === 'workout' && (
             <>
               <div>
-                <label className="text-xs text-slate-400 font-medium block mb-1">Exercise Name *</label>
+                <label className="text-xs text-zinc-400 font-medium block mb-1">Exercise Name *</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Barbell Squat, Bench Press, Pull-ups"
                   value={exerciseName}
                   onChange={(e) => setExerciseName(e.target.value)}
-                  className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-4 py-3 text-base font-semibold text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-[#18181b] border border-[#27272a] rounded-xl px-4 py-3 text-base font-semibold text-zinc-100 focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="text-xs text-slate-400 font-medium">Sets (Reps × Weight in kg/lbs)</label>
+                  <label className="text-xs text-zinc-400 font-medium">Sets (Reps × Weight in kg/lbs)</label>
                   <button
                     type="button"
                     onClick={handleAddSet}
-                    className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1"
+                    className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 interactive-element flex items-center gap-1"
                   >
                     <Plus className="w-3.5 h-3.5" /> Add Set
                   </button>
@@ -315,17 +315,17 @@ export default function QuickAddModal({ isOpen, onClose }) {
 
                 <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
                   {sets.map((s, idx) => (
-                    <div key={idx} className="flex items-center space-x-2 bg-slate-900 p-2 rounded-xl border border-[#1f2937]">
-                      <span className="w-6 text-center text-xs font-mono font-bold text-slate-400">#{idx + 1}</span>
+                    <div key={idx} className="flex items-center space-x-2 bg-[#18181b] p-2 rounded-xl border border-[#27272a]">
+                      <span className="w-6 text-center text-xs font-mono font-bold text-zinc-400">#{idx + 1}</span>
                       <div className="flex-1 flex items-center space-x-1">
                         <input
                           type="number"
                           placeholder="Reps"
                           value={s.reps}
                           onChange={(e) => handleUpdateSet(idx, 'reps', e.target.value)}
-                          className="w-20 bg-slate-800 border border-[#1f2937] rounded-lg px-2 py-1.5 text-sm text-center text-white font-mono"
+                          className="w-20 bg-[#121214] border border-[#27272a] rounded-lg px-2 py-1.5 text-sm text-center text-zinc-100 font-mono focus:outline-none focus:border-emerald-500"
                         />
-                        <span className="text-xs text-slate-500">reps</span>
+                        <span className="text-xs text-zinc-500">reps</span>
                       </div>
                       <div className="flex-1 flex items-center space-x-1">
                         <input
@@ -334,15 +334,15 @@ export default function QuickAddModal({ isOpen, onClose }) {
                           placeholder="Weight"
                           value={s.weight}
                           onChange={(e) => handleUpdateSet(idx, 'weight', e.target.value)}
-                          className="w-20 bg-slate-800 border border-[#1f2937] rounded-lg px-2 py-1.5 text-sm text-center text-white font-mono"
+                          className="w-20 bg-[#121214] border border-[#27272a] rounded-lg px-2 py-1.5 text-sm text-center text-zinc-100 font-mono focus:outline-none focus:border-emerald-500"
                         />
-                        <span className="text-xs text-slate-500">kg</span>
+                        <span className="text-xs text-zinc-500">kg</span>
                       </div>
                       {sets.length > 1 && (
                         <button
                           type="button"
                           onClick={() => handleRemoveSet(idx)}
-                          className="text-slate-500 hover:text-rose-400 p-1"
+                          className="text-zinc-500 hover:text-red-400 p-1"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -357,19 +357,19 @@ export default function QuickAddModal({ isOpen, onClose }) {
           {tab === 'diet' && (
             <>
               <div>
-                <label className="text-xs text-slate-400 font-medium block mb-1">Plan Title / Notes</label>
+                <label className="text-xs text-zinc-400 font-medium block mb-1">Plan Title / Notes</label>
                 <input
                   type="text"
                   placeholder="e.g. Macro Chart"
                   value={dietTitle}
                   onChange={(e) => setDietTitle(e.target.value)}
-                  className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-[#18181b] border border-[#27272a] rounded-xl px-4 py-2.5 text-sm text-zinc-100 focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
               <div>
-                <label className="text-xs text-slate-400 font-medium block mb-1.5">Upload Diet Chart / Sheet Photo *</label>
-                <div className="border-2 border-dashed border-[#1f2937] rounded-2xl p-4 text-center bg-slate-900 hover:bg-slate-800 transition-all cursor-pointer relative">
+                <label className="text-xs text-zinc-400 font-medium block mb-1.5">Upload Diet Chart / Sheet Photo *</label>
+                <div className="border-2 border-dashed border-[#27272a] rounded-2xl p-4 text-center bg-[#18181b] hover:border-emerald-400 transition-all cursor-pointer relative">
                   <input
                     type="file"
                     accept="image/*"
@@ -379,16 +379,16 @@ export default function QuickAddModal({ isOpen, onClose }) {
                   />
                   {dietImageBase64 ? (
                     <div className="space-y-2">
-                      <img src={dietImageBase64} alt="Diet Preview" className="max-h-36 mx-auto rounded-xl object-contain border border-[#1f2937]" />
+                      <img src={dietImageBase64} alt="Diet Preview" className="max-h-36 mx-auto rounded-xl object-contain border border-[#27272a] animate-scale-in" />
                       <p className="text-xs text-emerald-400 font-medium">✓ Image loaded ready to save</p>
                     </div>
                   ) : (
                     <div className="py-4 space-y-2">
-                      <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto text-emerald-400">
+                      <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto text-emerald-400 animate-pulse-subtle">
                         <Camera className="w-6 h-6" />
                       </div>
-                      <p className="text-xs text-slate-300 font-medium">Tap to upload from Gallery or take Photo</p>
-                      <p className="text-[10px] text-slate-500">Supports JPG, PNG, WEBP</p>
+                      <p className="text-xs text-zinc-300 font-medium">Tap to upload from Gallery or take Photo</p>
+                      <p className="text-[10px] text-zinc-500">Supports JPG, PNG, WEBP</p>
                     </div>
                   )}
                 </div>
@@ -400,7 +400,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold rounded-2xl shadow-md active:scale-95 transition-all flex items-center justify-center space-x-2 text-sm mt-4"
+            className="w-full py-3.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-extrabold rounded-2xl shadow-sm interactive-element flex items-center justify-center space-x-2 text-sm mt-4"
           >
             <span>{loading ? 'Saving to Database...' : `Save ${tab.charAt(0).toUpperCase() + tab.slice(1)}`}</span>
           </button>

@@ -43,17 +43,15 @@ export default function GymTracker() {
   const [subTab, setSubTab] = useState('log'); // 'log', 'progress', 'history'
 
   // Log form state
-  const [exerciseName, setExerciseName] = useState('Bench Press');
+  const [exerciseName, setExerciseName] = useState('');
   const [workoutDate, setWorkoutDate] = useState(new Date().toISOString().split('T')[0]);
   const [sets, setSets] = useState([
-    { reps: '10', weight: '60' },
-    { reps: '8', weight: '65' },
-    { reps: '6', weight: '70' }
+    { reps: '', weight: '' }
   ]);
 
   // Progress chart selected exercise
   const uniqueExercises = Array.from(new Set(workouts.map((w) => w.exercise_name))).filter(Boolean);
-  const [chartExercise, setChartExercise] = useState(uniqueExercises[0] || 'Bench Press');
+  const [chartExercise, setChartExercise] = useState(uniqueExercises[0] || '');
 
   // History card expansion state
   const [expandedWorkouts, setExpandedWorkouts] = useState({});
@@ -180,7 +178,7 @@ export default function GymTracker() {
       </div>
 
       {/* Sub-Tabs */}
-      <div className="flex bg-slate-900/80 p-1.5 rounded-2xl border border-white/10 max-w-md mx-auto">
+      <div className="flex bg-[#18181b] p-1.5 rounded-2xl border border-[#27272a] max-w-md mx-auto">
         {[
           { id: 'log', label: 'Log Workout', icon: Plus },
           { id: 'progress', label: 'Progress Chart', icon: TrendingUp },
@@ -192,8 +190,8 @@ export default function GymTracker() {
             <button
               key={t.id}
               onClick={() => setSubTab(t.id)}
-              className={`flex-1 py-2 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 transition-all ${
-                isActive ? 'bg-amber-500 text-slate-950 shadow-lg font-bold' : 'text-slate-400 hover:text-white'
+              className={`flex-1 py-2 rounded-xl text-xs font-semibold flex items-center justify-center space-x-1.5 interactive-element ${
+                isActive ? 'bg-emerald-500 text-zinc-950 shadow-sm font-bold' : 'text-zinc-400 hover:text-zinc-100'
               }`}
             >
               <Icon className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -216,7 +214,7 @@ export default function GymTracker() {
                   placeholder="e.g. Bench Press, Squats, Pull-ups"
                   value={exerciseName}
                   onChange={(e) => setExerciseName(e.target.value)}
-                  className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-base font-bold text-white focus:outline-none focus:border-amber-500"
+                  className="w-full bg-[#18181b] border border-[#27272a] rounded-xl px-4 py-3 text-base font-bold text-zinc-100 focus:outline-none focus:border-emerald-500"
                 />
                 <div className="flex flex-wrap gap-1.5">
                   {commonExercises.slice(0, 5).map((name) => (
@@ -224,10 +222,10 @@ export default function GymTracker() {
                       type="button"
                       key={name}
                       onClick={() => setExerciseName(name)}
-                      className={`px-2 py-1 rounded-lg text-[10px] font-medium transition-all ${
+                      className={`px-2 py-1 rounded-lg text-[10px] font-medium interactive-element ${
                         exerciseName === name
-                          ? 'bg-amber-500/20 border border-amber-500/40 text-amber-300'
-                          : 'bg-slate-800/80 text-slate-400 hover:text-white'
+                          ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-bold'
+                          : 'bg-[#18181b] text-zinc-400 border border-[#27272a] hover:text-zinc-100'
                       }`}
                     >
                       {name}
@@ -243,22 +241,22 @@ export default function GymTracker() {
                 type="date"
                 value={workoutDate}
                 onChange={(e) => setWorkoutDate(e.target.value)}
-                className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500"
+                className="w-full bg-[#18181b] border border-[#27272a] rounded-xl px-4 py-3 text-sm text-zinc-100 focus:outline-none focus:border-emerald-500"
               />
             </div>
           </div>
 
           {/* Sets Table */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between border-b border-white/10 pb-2">
-              <span className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
-                <Flame className="w-4 h-4 text-amber-400" />
+            <div className="flex items-center justify-between border-b border-[#27272a] pb-2">
+              <span className="text-xs font-bold text-zinc-300 flex items-center gap-1.5">
+                <Flame className="w-4 h-4 text-emerald-400" />
                 Sets (Reps × Weight)
               </span>
               <button
                 type="button"
                 onClick={handleAddSet}
-                className="px-3 py-1 bg-amber-500/20 border border-amber-500/40 text-amber-300 font-bold text-xs rounded-xl hover:bg-amber-500/30 transition-all flex items-center gap-1"
+                className="px-3 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-bold text-xs rounded-xl hover:bg-emerald-500/30 interactive-element flex items-center gap-1"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add Set</span>
@@ -267,34 +265,34 @@ export default function GymTracker() {
 
             <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
               {sets.map((s, idx) => (
-                <div key={idx} className="flex items-center space-x-3 bg-slate-900/90 p-3 rounded-2xl border border-white/5">
-                  <span className="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center font-mono font-bold text-xs text-amber-400 shrink-0">
+                <div key={idx} className="flex items-center space-x-3 bg-[#18181b] p-3 rounded-2xl border border-[#27272a]">
+                  <span className="w-8 h-8 rounded-xl bg-[#121214] border border-[#27272a] flex items-center justify-center font-mono font-bold text-xs text-emerald-400 shrink-0">
                     #{idx + 1}
                   </span>
                   <div className="flex-1 flex items-center space-x-2">
-                    <span className="text-xs text-slate-400">Reps:</span>
+                    <span className="text-xs text-zinc-400">Reps:</span>
                     <input
                       type="number"
                       value={s.reps}
                       onChange={(e) => handleUpdateSet(idx, 'reps', e.target.value)}
-                      className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-sm text-center font-mono font-bold text-white focus:outline-none focus:border-amber-500"
+                      className="w-full bg-[#121214] border border-[#27272a] rounded-xl px-3 py-2 text-sm text-center font-mono font-bold text-zinc-100 focus:outline-none focus:border-emerald-500"
                     />
                   </div>
                   <div className="flex-1 flex items-center space-x-2">
-                    <span className="text-xs text-slate-400">Weight (kg):</span>
+                    <span className="text-xs text-zinc-400">Weight (kg):</span>
                     <input
                       type="number"
                       step="0.5"
                       value={s.weight}
                       onChange={(e) => handleUpdateSet(idx, 'weight', e.target.value)}
-                      className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-sm text-center font-mono font-bold text-white focus:outline-none focus:border-amber-500"
+                      className="w-full bg-[#121214] border border-[#27272a] rounded-xl px-3 py-2 text-sm text-center font-mono font-bold text-zinc-100 focus:outline-none focus:border-emerald-500"
                     />
                   </div>
                   {sets.length > 1 && (
                     <button
                       type="button"
                       onClick={() => handleRemoveSet(idx)}
-                      className="p-2 text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 rounded-xl transition-all shrink-0"
+                      className="p-2 text-zinc-500 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-all shrink-0"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -304,10 +302,10 @@ export default function GymTracker() {
             </div>
 
             {/* Auto-calculated Total Volume Preview */}
-            <div className="bg-slate-900/90 rounded-2xl p-4 border border-amber-500/30 flex items-center justify-between">
+            <div className="bg-[#18181b] rounded-2xl p-4 border border-emerald-500/30 flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <Activity className="w-5 h-5 text-emerald-400 animate-pulse" />
-                <span className="text-xs text-slate-300 font-medium">Calculated Session Volume:</span>
+                <span className="text-xs text-zinc-300 font-medium">Calculated Session Volume:</span>
               </div>
               <span className="text-xl font-mono font-extrabold text-emerald-400">
                 {liveVolume.toLocaleString()} kg
@@ -317,7 +315,7 @@ export default function GymTracker() {
 
           <button
             type="submit"
-            className="w-full py-4 bg-gradient-to-r from-amber-500 via-emerald-500 to-cyan-500 text-slate-950 font-extrabold rounded-2xl shadow-lg hover:brightness-110 active:scale-98 transition-all text-sm flex items-center justify-center space-x-2"
+            className="w-full py-4 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-extrabold rounded-2xl shadow-sm interactive-element text-sm flex items-center justify-center space-x-2"
           >
             <Dumbbell className="w-4 h-4 stroke-[2.5]" />
             <span>Save Workout Session</span>
@@ -329,18 +327,18 @@ export default function GymTracker() {
       {subTab === 'progress' && (
         <div className="space-y-4 animate-fade-in">
           {/* Exercise Selector */}
-          <div className="glass-card rounded-2xl p-4 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <span className="text-xs font-bold text-white flex items-center gap-1.5">
-              <TrendingUp className="w-4 h-4 text-amber-400" />
+          <div className="glass-card rounded-2xl p-4 border border-[#27272a] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <span className="text-xs font-bold text-zinc-100 flex items-center gap-1.5">
+              <TrendingUp className="w-4 h-4 text-emerald-400" />
               Select Exercise to Visualize Overload:
             </span>
             <select
               value={chartExercise}
               onChange={(e) => setChartExercise(e.target.value)}
-              className="bg-slate-900 border border-white/10 rounded-xl px-4 py-2 text-xs font-bold text-amber-400 focus:outline-none focus:border-amber-500"
+              className="bg-[#18181b] border border-[#27272a] rounded-xl px-4 py-2 text-xs font-bold text-emerald-400 focus:outline-none focus:border-emerald-500"
             >
               {uniqueExercises.length === 0 ? (
-                <option value="Bench Press">Bench Press (Sample)</option>
+                <option value="">No exercises logged yet</option>
               ) : (
                 uniqueExercises.map((ex) => (
                   <option key={ex} value={ex}>{ex}</option>
@@ -351,19 +349,19 @@ export default function GymTracker() {
 
           {/* Stats Summary row */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="glass-card rounded-2xl p-4 border border-white/10 flex items-center justify-between">
+            <div className="glass-card rounded-2xl p-4 border border-[#27272a] flex items-center justify-between">
               <div>
-                <span className="text-[10px] text-slate-400 uppercase font-mono">Personal Best Volume</span>
-                <h4 className="text-xl font-mono font-extrabold text-amber-400 mt-0.5">{maxVolume.toLocaleString()} kg</h4>
+                <span className="text-[10px] text-zinc-400 uppercase font-mono">Personal Best Volume</span>
+                <h4 className="text-xl font-mono font-extrabold text-emerald-400 mt-0.5">{maxVolume.toLocaleString()} kg</h4>
               </div>
-              <Award className="w-8 h-8 text-amber-400/30" />
+              <Award className="w-8 h-8 text-emerald-400/30" />
             </div>
-            <div className="glass-card rounded-2xl p-4 border border-white/10 flex items-center justify-between">
+            <div className="glass-card rounded-2xl p-4 border border-[#27272a] flex items-center justify-between">
               <div>
-                <span className="text-[10px] text-slate-400 uppercase font-mono">Sessions Completed</span>
-                <h4 className="text-xl font-mono font-extrabold text-emerald-400 mt-0.5">{totalSessions} Sessions</h4>
+                <span className="text-[10px] text-zinc-400 uppercase font-mono">Sessions Logged</span>
+                <h4 className="text-xl font-mono font-extrabold text-zinc-100 mt-0.5">{uniqueExercises.length > 0 ? workouts.filter(w => w.exercise_name === chartExercise).length : 0} sessions</h4>
               </div>
-              <Flame className="w-8 h-8 text-emerald-400/30" />
+              <Activity className="w-8 h-8 text-zinc-500/30" />
             </div>
           </div>
 
@@ -401,20 +399,20 @@ export default function GymTracker() {
               return (
                 <div
                   key={w.id}
-                  className="glass-card rounded-2xl border border-white/10 overflow-hidden transition-all"
+                  className="glass-card glass-card-hover rounded-2xl border border-[#27272a] overflow-hidden transition-all"
                 >
                   <div
                     onClick={() => toggleExpand(w.id)}
-                    className="p-4 flex items-center justify-between cursor-pointer hover:bg-white/5 transition-colors"
+                    className="p-4 flex items-center justify-between cursor-pointer hover:bg-[#18181b] transition-colors"
                   >
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold font-mono text-xs">
+                      <div className="w-10 h-10 rounded-2xl bg-[#18181b] border border-[#27272a] flex items-center justify-center text-emerald-400 font-bold font-mono text-xs">
                         {w.sets?.length || 3}s
                       </div>
                       <div>
                         <div className="flex items-center space-x-2">
-                          <h4 className="font-bold text-white text-base font-['Outfit']">{w.exercise_name}</h4>
-                          <span className="text-[10px] text-slate-400 font-mono">{w.date}</span>
+                          <h4 className="font-bold text-zinc-100 text-base font-['Outfit']">{w.exercise_name}</h4>
+                          <span className="text-[10px] text-zinc-400 font-mono">{w.date}</span>
                         </div>
                         <p className="text-xs text-emerald-400 font-mono font-bold mt-0.5">
                           Total Vol: {w.total_volume} kg
@@ -428,12 +426,12 @@ export default function GymTracker() {
                           e.stopPropagation();
                           handleDeleteWorkout(w.id);
                         }}
-                        className="p-1.5 text-slate-500 hover:text-rose-400 rounded-xl transition-all"
+                        className="p-1.5 text-zinc-500 hover:text-red-400 rounded-xl transition-all"
                         title="Delete session"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
-                      <button type="button" className="p-1 text-slate-400">
+                      <button type="button" className="p-1 text-zinc-400">
                         {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
                       </button>
                     </div>
@@ -441,13 +439,13 @@ export default function GymTracker() {
 
                   {/* Expanded Sets Detail */}
                   {isExpanded && (
-                    <div className="px-4 pb-4 pt-1 bg-slate-900/60 border-t border-white/10 space-y-2 animate-fade-in">
-                      <span className="text-[10px] uppercase font-bold text-slate-400 font-mono">Set Breakdown:</span>
+                    <div className="px-4 pb-4 pt-1 bg-[#18181b] border-t border-[#27272a] space-y-2 animate-fade-in">
+                      <span className="text-[10px] uppercase font-bold text-zinc-400 font-mono">Set Breakdown:</span>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                         {w.sets && w.sets.map((set, i) => (
-                          <div key={i} className="bg-slate-800/80 p-2.5 rounded-xl border border-white/5 text-center">
-                            <span className="text-[10px] text-slate-400 block font-mono">Set #{set.set_number || i + 1}</span>
-                            <span className="text-xs font-mono font-bold text-white">
+                          <div key={i} className="bg-[#121214] p-2.5 rounded-xl border border-[#27272a] text-center">
+                            <span className="text-[10px] text-zinc-400 block font-mono">Set #{set.set_number || i + 1}</span>
+                            <span className="text-xs font-mono font-bold text-zinc-100">
                               {set.reps} reps × {set.weight} kg
                             </span>
                           </div>

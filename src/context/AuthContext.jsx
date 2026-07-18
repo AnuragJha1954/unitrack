@@ -47,6 +47,9 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     async function initAuth() {
       setLoading(true);
+      // Purge any residual demo/Alex records from local IndexedDB & Neon
+      await dbService.purgeDemoAndClean();
+
       // Ensure default admin user exists
       let adminUser = await dbService.getUser('admin');
       if (!adminUser) {
@@ -58,19 +61,23 @@ export function AuthProvider({ children }) {
         });
       }
 
-      const savedEmail = localStorage.getItem('unitrack_user_email');
-      if (savedEmail) {
-        const found = await dbService.getUser(savedEmail);
-        if (found) {
-          setUser(found);
-          await loadUserData(found);
-          setLoading(false);
-          return;
-        }
+      let savedEmail = localStorage.getItem('unitrack_user_email');
+      // If old demo user (guest/Alex) is saved in localStorage or if no account is saved, default to clean Admin account
+      if (!savedEmail || savedEmail === 'guest.tracker@unitrack.app' || savedEmail.toLowerCase().includes('guest') || savedEmail.toLowerCase().includes('alex')) {
+        savedEmail = 'admin';
+        localStorage.setItem('unitrack_user_email', 'admin');
       }
 
-      setUser(null);
-      await loadUserData(null);
+      const found = await dbService.getUser(savedEmail);
+      if (found) {
+        setUser(found);
+        await loadUserData(found);
+        setLoading(false);
+        return;
+      }
+
+      setUser(adminUser);
+      await loadUserData(adminUser);
       setLoading(false);
     }
     initAuth();

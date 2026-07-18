@@ -100,32 +100,32 @@ export default function TaskPlanner({ onOpenQuickAdd }) {
           </button>
           <button
             onClick={onOpenQuickAdd}
-            className="px-3.5 py-2 bg-purple-500/20 border border-purple-500/40 text-purple-300 font-bold text-xs rounded-xl hover:bg-purple-500/30 transition-all flex items-center gap-1"
+            className="px-3.5 py-2 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs rounded-xl shadow-sm interactive-element flex items-center gap-1"
           >
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
             <span className="hidden sm:inline">Add Task</span>
           </button>
         </div>
       </div>
 
       {carryOverMessage && (
-        <div className="p-3.5 rounded-2xl bg-purple-500/20 border border-purple-500/40 text-purple-200 text-xs font-semibold flex items-center justify-between animate-fade-in">
+        <div className="p-3.5 rounded-2xl bg-[#18181b] border border-emerald-500/30 text-emerald-300 text-xs font-semibold flex items-center justify-between animate-fade-in">
           <span>✨ {carryOverMessage}</span>
         </div>
       )}
 
       {/* Horizontal Date Selector Pills */}
-      <div className="glass-card rounded-3xl p-4 border border-white/10 space-y-3">
-        <div className="flex items-center justify-between text-xs font-medium text-slate-300">
+      <div className="glass-card rounded-3xl p-4 space-y-3 transition-all">
+        <div className="flex items-center justify-between text-xs font-medium text-zinc-300">
           <span className="flex items-center gap-1.5">
-            <Calendar className="w-4 h-4 text-purple-400" />
-            Selected Date: <strong className="text-white font-mono">{selectedDate}</strong>
+            <Calendar className="w-4 h-4 text-emerald-400" />
+            Selected Date: <strong className="text-zinc-100 font-mono">{selectedDate}</strong>
           </span>
           <input
             type="date"
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            className="bg-slate-900 border border-white/10 rounded-xl px-2.5 py-1 text-xs text-white focus:outline-none focus:border-purple-500"
+            className="bg-[#18181b] border border-[#27272a] rounded-xl px-2.5 py-1 text-xs text-zinc-100 focus:outline-none focus:border-emerald-500"
           />
         </div>
 
@@ -137,12 +137,12 @@ export default function TaskPlanner({ onOpenQuickAdd }) {
               <button
                 key={p.iso}
                 onClick={() => setSelectedDate(p.iso)}
-                className={`flex flex-col items-center justify-center min-w-[58px] py-2.5 rounded-2xl border transition-all shrink-0 relative ${
+                className={`flex flex-col items-center justify-center min-w-[58px] py-2.5 rounded-2xl border interactive-element shrink-0 relative ${
                   isSelected
-                    ? 'bg-purple-500 text-slate-950 font-bold border-purple-400 shadow-lg scale-105'
+                    ? 'bg-emerald-500 text-zinc-950 font-bold border-emerald-400 shadow-sm scale-105'
                     : p.isToday
-                    ? 'bg-purple-500/15 text-purple-300 border-purple-500/40'
-                    : 'bg-slate-900/60 text-slate-400 border-white/5 hover:border-white/20 hover:text-white'
+                    ? 'bg-[#18181b] text-emerald-400 border-emerald-500/40'
+                    : 'bg-[#18181b] text-zinc-400 border-[#27272a] hover:border-zinc-500 hover:text-zinc-100'
                 }`}
               >
                 <span className="text-[10px] uppercase font-medium">{p.dayName}</span>
@@ -151,7 +151,7 @@ export default function TaskPlanner({ onOpenQuickAdd }) {
                 {hasTasks && (
                   <span
                     className={`w-1.5 h-1.5 rounded-full absolute top-1.5 right-1.5 ${
-                      isSelected ? 'bg-slate-950' : 'bg-purple-400'
+                      isSelected ? 'bg-zinc-950' : 'bg-emerald-400'
                     }`}
                   />
                 )}
@@ -165,7 +165,7 @@ export default function TaskPlanner({ onOpenQuickAdd }) {
       <div className="space-y-4">
         <h3 className="text-sm font-bold text-slate-300 flex items-center justify-between">
           <span>Pending Tasks ({pendingTasks.length})</span>
-          {pendingTasks.length > 0 && <span className="text-xs font-normal text-purple-400 font-mono">Tap to mark complete</span>}
+          {pendingTasks.length > 0 && <span className="text-xs font-normal text-zinc-400 font-mono">Tap to mark complete</span>}
         </h3>
 
         {pendingTasks.length === 0 ? (
@@ -176,32 +176,32 @@ export default function TaskPlanner({ onOpenQuickAdd }) {
           <div className="space-y-2.5">
             {pendingTasks.map((task) => {
               const priorityColors = {
-                high: 'bg-rose-500/15 border-rose-500/40 text-rose-300',
-                medium: 'bg-amber-500/15 border-amber-500/40 text-amber-300',
-                low: 'bg-cyan-500/15 border-cyan-500/40 text-cyan-300'
+                high: 'bg-red-500/15 border-red-500/30 text-red-400',
+                medium: 'bg-[#18181b] border-[#27272a] text-zinc-300',
+                low: 'bg-[#18181b] border-[#27272a] text-zinc-500'
               };
               return (
                 <div
                   key={task.id}
                   onClick={() => handleToggle(task)}
-                  className="glass-card glass-card-hover rounded-2xl p-4 border border-white/10 flex items-center justify-between gap-3 cursor-pointer transition-all"
+                  className="glass-card glass-card-hover rounded-2xl p-4 flex items-center justify-between gap-3 cursor-pointer"
                 >
                   <div className="flex items-start space-x-3 overflow-hidden flex-1">
                     <button
                       type="button"
-                      className="mt-0.5 w-5 h-5 rounded-lg border border-slate-500 hover:border-purple-400 flex items-center justify-center shrink-0 transition-all text-slate-400"
+                      className="mt-0.5 w-5 h-5 rounded-lg border border-zinc-600 hover:border-emerald-400 flex items-center justify-center shrink-0 transition-all text-zinc-400"
                     >
                       <Circle className="w-3 h-3" />
                     </button>
                     <div className="overflow-hidden flex-1">
                       <div className="flex items-center space-x-2">
-                        <h4 className="font-bold text-white text-sm truncate">{task.title}</h4>
+                        <h4 className="font-bold text-zinc-100 text-sm truncate">{task.title}</h4>
                         <span className={`text-[9px] font-mono font-bold uppercase px-2 py-0.5 rounded-full border ${priorityColors[task.priority] || priorityColors.medium}`}>
                           {task.priority}
                         </span>
                       </div>
                       {task.description && (
-                        <p className="text-xs text-slate-400 mt-1 line-clamp-2">{task.description}</p>
+                        <p className="text-xs text-zinc-400 mt-1 line-clamp-2">{task.description}</p>
                       )}
                     </div>
                   </div>
@@ -211,7 +211,7 @@ export default function TaskPlanner({ onOpenQuickAdd }) {
                       e.stopPropagation();
                       handleDelete(task.id);
                     }}
-                    className="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 rounded-xl transition-all shrink-0"
+                    className="p-1.5 text-zinc-500 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-all shrink-0"
                     title="Delete task"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -224,21 +224,21 @@ export default function TaskPlanner({ onOpenQuickAdd }) {
 
         {/* Completed Tasks Section */}
         {completedTasks.length > 0 && (
-          <div className="pt-4 space-y-2.5 border-t border-white/10">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">
+          <div className="pt-4 space-y-2.5 border-t border-[#27272a]">
+            <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-wider font-mono">
               Completed ({completedTasks.length})
             </h3>
             {completedTasks.map((task) => (
               <div
                 key={task.id}
                 onClick={() => handleToggle(task)}
-                className="glass-card rounded-2xl p-3.5 border border-white/5 bg-slate-900/40 flex items-center justify-between gap-3 cursor-pointer opacity-70 hover:opacity-100 transition-all"
+                className="glass-card rounded-2xl p-3.5 bg-[#18181b] flex items-center justify-between gap-3 cursor-pointer opacity-70 hover:opacity-100 transition-all"
               >
                 <div className="flex items-center space-x-3 overflow-hidden flex-1">
-                  <div className="w-5 h-5 rounded-lg bg-emerald-500 border border-emerald-500 flex items-center justify-center text-slate-950 shrink-0">
+                  <div className="w-5 h-5 rounded-lg bg-emerald-500 border border-emerald-500 flex items-center justify-center text-zinc-950 shrink-0">
                     <CheckCircle2 className="w-3.5 h-3.5 stroke-[3]" />
                   </div>
-                  <span className="text-sm font-medium task-strikethrough text-slate-400 truncate">
+                  <span className="text-sm font-medium task-strikethrough text-zinc-400 truncate">
                     {task.title}
                   </span>
                 </div>
@@ -248,7 +248,7 @@ export default function TaskPlanner({ onOpenQuickAdd }) {
                     e.stopPropagation();
                     handleDelete(task.id);
                   }}
-                  className="p-1.5 text-slate-500 hover:text-rose-400 rounded-xl transition-all shrink-0"
+                  className="p-1.5 text-zinc-500 hover:text-red-400 rounded-xl transition-all shrink-0"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>

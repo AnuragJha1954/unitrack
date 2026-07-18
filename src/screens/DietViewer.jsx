@@ -76,20 +76,20 @@ export default function DietViewer({ onOpenQuickAdd }) {
   return (
     <div className="space-y-6 pb-24 px-4 max-w-4xl mx-auto pt-2 animate-fade-in">
       {/* Module Header */}
-      <div className="bg-[#111827] rounded-3xl p-5 border border-[#1f2937] flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
+      <div className="glass-card rounded-3xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all">
         <div className="flex items-center space-x-3">
           <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
             <Utensils className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-extrabold font-['Outfit'] text-white">Diet Plan & Macro Viewer</h2>
-            <p className="text-xs text-slate-400">Upload and access your nutritionist diet schedules anytime offline.</p>
+            <h2 className="text-xl sm:text-2xl font-extrabold font-['Outfit'] text-zinc-100">Diet Plan & Macro Viewer</h2>
+            <p className="text-xs text-zinc-400">Upload and access your nutritionist diet schedules anytime offline.</p>
           </div>
         </div>
 
         <button
           onClick={() => setShowUploadForm(!showUploadForm)}
-          className="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-2xl shadow-sm active:scale-95 transition-all flex items-center justify-center space-x-2 shrink-0"
+          className="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs rounded-2xl shadow-sm interactive-element flex items-center justify-center space-x-2 shrink-0"
         >
           <Plus className="w-4 h-4 stroke-[2.5]" />
           <span>{showUploadForm ? 'Close Upload Form' : 'Upload Diet Plan'}</span>
@@ -98,36 +98,36 @@ export default function DietViewer({ onOpenQuickAdd }) {
 
       {/* Upload Form Section */}
       {showUploadForm && (
-        <form onSubmit={handleUploadSubmit} className="glass-card bg-slate-900/95 rounded-3xl p-5 border border-cyan-500/50 space-y-4 animate-fade-in">
-          <h3 className="font-bold text-sm text-cyan-400 font-['Outfit'] flex items-center gap-2">
+        <form onSubmit={handleUploadSubmit} className="glass-card bg-[#18181b] rounded-3xl p-5 border border-emerald-500/40 space-y-4 animate-fade-in">
+          <h3 className="font-bold text-sm text-emerald-400 font-['Outfit'] flex items-center gap-2">
             <Upload className="w-4 h-4" /> Upload New Diet Chart / Macro Table
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="text-xs text-slate-300 font-medium block mb-1">Plan Title</label>
+              <label className="text-xs text-zinc-300 font-medium block mb-1">Plan Title</label>
               <input
                 type="text"
                 placeholder="e.g. Summer Shred Macro Schedule v3"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full bg-slate-800 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyan-500"
+                className="w-full bg-[#121214] border border-[#27272a] rounded-xl px-3.5 py-2.5 text-xs text-zinc-100 focus:outline-none focus:border-emerald-500"
               />
             </div>
             <div>
-              <label className="text-xs text-slate-300 font-medium block mb-1">Effective Date</label>
+              <label className="text-xs text-zinc-300 font-medium block mb-1">Effective Date</label>
               <input
                 type="date"
                 value={uploadDate}
                 onChange={(e) => setUploadDate(e.target.value)}
-                className="w-full bg-slate-800 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-cyan-500"
+                className="w-full bg-[#121214] border border-[#27272a] rounded-xl px-3.5 py-2.5 text-xs text-zinc-100 focus:outline-none focus:border-emerald-500"
               />
             </div>
           </div>
 
           <div>
-            <label className="text-xs text-slate-300 font-medium block mb-1.5">Select Image from Android Camera / Photo Gallery *</label>
-            <div className="border-2 border-dashed border-cyan-500/40 rounded-2xl p-6 text-center bg-slate-900/60 hover:bg-slate-900/90 transition-all relative cursor-pointer">
+            <label className="text-xs text-zinc-300 font-medium block mb-1.5">Select Image from Android Camera / Photo Gallery *</label>
+            <div className="border-2 border-dashed border-emerald-500/40 rounded-2xl p-6 text-center bg-[#121214] hover:border-emerald-400 transition-all relative cursor-pointer">
               <input
                 type="file"
                 accept="image/*"
@@ -137,30 +137,30 @@ export default function DietViewer({ onOpenQuickAdd }) {
               />
               {imageBase64 ? (
                 <div className="space-y-3">
-                  <img src={imageBase64} alt="Preview" className="max-h-48 mx-auto rounded-xl object-contain border border-white/10 shadow-lg" />
+                  <img src={imageBase64} alt="Preview" className="max-h-48 mx-auto rounded-xl object-contain border border-[#27272a] shadow-lg animate-scale-in" />
                   <span className="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-300 text-xs font-bold rounded-full border border-emerald-500/40">
                     ✓ Image Selected & Ready
                   </span>
                 </div>
               ) : (
                 <div className="py-6 space-y-2">
-                  <div className="w-14 h-14 rounded-full bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mx-auto text-cyan-400">
+                  <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-400 animate-pulse-subtle">
                     <Camera className="w-7 h-7" />
                   </div>
-                  <h4 className="font-bold text-sm text-white">Tap to Take Photo or Choose from Gallery</h4>
-                  <p className="text-xs text-slate-400">Supports JPG, PNG, WEBP, SVG diet sheets</p>
+                  <h4 className="font-bold text-sm text-zinc-100">Tap to Take Photo or Choose from Gallery</h4>
+                  <p className="text-xs text-zinc-400">Supports JPG, PNG, WEBP, SVG diet sheets</p>
                 </div>
               )}
             </div>
           </div>
 
           <div className="flex items-center justify-between pt-2">
-            <label className="flex items-center space-x-2 text-xs text-slate-300 font-medium cursor-pointer">
+            <label className="flex items-center space-x-2 text-xs text-zinc-300 font-medium cursor-pointer">
               <input
                 type="checkbox"
                 checked={isActive}
                 onChange={(e) => setIsActive(e.target.checked)}
-                className="w-4 h-4 rounded bg-slate-800 border-white/20 text-cyan-500 focus:ring-0"
+                className="w-4 h-4 rounded bg-[#121214] border-[#27272a] text-emerald-500 focus:ring-0"
               />
               <span>Set immediately as Active Diet Plan</span>
             </label>
@@ -168,7 +168,7 @@ export default function DietViewer({ onOpenQuickAdd }) {
             <button
               type="submit"
               disabled={loading || !imageBase64}
-              className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-extrabold rounded-xl shadow-lg hover:brightness-110 active:scale-95 transition-all text-xs disabled:opacity-50"
+              className="px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-extrabold rounded-xl shadow-sm interactive-element text-xs disabled:opacity-50"
             >
               {loading ? 'Saving...' : 'Save & Store Diet Plan'}
             </button>
@@ -178,24 +178,24 @@ export default function DietViewer({ onOpenQuickAdd }) {
 
       {/* ACTIVE DIET PLAN HERO DISPLAY */}
       <div className="space-y-3">
-        <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-cyan-400" /> Currently Active Diet Plan
+        <h3 className="text-sm font-bold text-zinc-100 uppercase tracking-wider font-mono flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-emerald-400" /> Currently Active Diet Plan
         </h3>
 
         {activePlan ? (
-          <div className="glass-card rounded-3xl p-5 border border-cyan-500/40 relative overflow-hidden group shadow-2xl">
+          <div className="glass-card glass-card-hover rounded-3xl p-5 border border-emerald-500/40 relative overflow-hidden group">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
               <div>
-                <span className="inline-block px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 text-[10px] font-bold uppercase font-mono mb-1">
+                <span className="inline-block px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold uppercase font-mono mb-1">
                   Active Macro Schedule
                 </span>
-                <h3 className="text-xl font-extrabold font-['Outfit'] text-white">{activePlan.title}</h3>
-                <p className="text-xs text-slate-400">Uploaded on: {activePlan.upload_date}</p>
+                <h3 className="text-xl font-extrabold font-['Outfit'] text-zinc-100">{activePlan.title}</h3>
+                <p className="text-xs text-zinc-400">Uploaded on: {activePlan.upload_date}</p>
               </div>
 
               <button
                 onClick={() => setSelectedImage(activePlan.image_data)}
-                className="px-4 py-2 bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 font-bold text-xs rounded-xl hover:bg-cyan-500/30 transition-all flex items-center gap-1.5 shrink-0"
+                className="px-4 py-2 bg-[#18181b] border border-emerald-500/40 text-emerald-300 font-bold text-xs rounded-xl interactive-element flex items-center gap-1.5 shrink-0"
               >
                 <Maximize2 className="w-3.5 h-3.5" />
                 <span>Full-Screen Zoom</span>
@@ -205,11 +205,11 @@ export default function DietViewer({ onOpenQuickAdd }) {
             {/* Diet Image Box */}
             <div
               onClick={() => setSelectedImage(activePlan.image_data)}
-              className="w-full max-h-[500px] rounded-2xl overflow-hidden bg-slate-900 border border-white/10 flex items-center justify-center cursor-pointer relative group/view"
+              className="w-full max-h-[500px] rounded-2xl overflow-hidden bg-[#18181b] border border-[#27272a] flex items-center justify-center cursor-pointer relative group/view"
             >
               <img src={activePlan.image_data} alt={activePlan.title} className="w-full h-auto object-contain max-h-[500px]" />
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/view:opacity-100 flex flex-col items-center justify-center transition-all">
-                <Maximize2 className="w-10 h-10 text-white mb-2" />
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/view:opacity-100 flex flex-col items-center justify-center transition-all">
+                <Maximize2 className="w-10 h-10 text-white mb-2 animate-scale-in" />
                 <span className="text-xs font-bold text-white bg-black/80 px-4 py-2 rounded-full border border-white/20">
                   Click / Tap to Open Full Zoomable Viewer
                 </span>
@@ -217,7 +217,7 @@ export default function DietViewer({ onOpenQuickAdd }) {
             </div>
           </div>
         ) : (
-          <div className="glass-card rounded-3xl p-10 text-center text-slate-400 text-xs border border-dashed border-white/10">
+          <div className="glass-card rounded-3xl p-10 text-center text-zinc-400 text-xs border border-dashed border-[#27272a]">
             No active diet plan found. Tap '+ Upload Diet Plan' above to store your nutritionist sheet!
           </div>
         )}
@@ -225,9 +225,9 @@ export default function DietViewer({ onOpenQuickAdd }) {
 
       {/* VERSION HISTORY LIST */}
       {dietPlans.length > 1 && (
-        <div className="space-y-3 pt-4 border-t border-white/10">
-          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
-            <History className="w-3.5 h-3.5 text-cyan-400" /> Past Diet Plan Versions ({dietPlans.length - 1})
+        <div className="space-y-3 pt-4 border-t border-[#27272a]">
+          <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
+            <History className="w-3.5 h-3.5 text-emerald-400" /> Past Diet Plan Versions ({dietPlans.length - 1})
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -236,19 +236,19 @@ export default function DietViewer({ onOpenQuickAdd }) {
               return (
                 <div
                   key={plan.id}
-                  className="glass-card rounded-2xl p-4 border border-white/5 flex items-center justify-between gap-3 hover:border-white/15 transition-all"
+                  className="glass-card glass-card-hover rounded-2xl p-4 border border-[#27272a] flex items-center justify-between gap-3"
                 >
                   <div
                     onClick={() => setSelectedImage(plan.image_data)}
                     className="flex items-center space-x-3 overflow-hidden flex-1 cursor-pointer"
                   >
-                    <div className="w-14 h-14 rounded-xl bg-slate-800 overflow-hidden border border-white/10 shrink-0 relative flex items-center justify-center">
+                    <div className="w-14 h-14 rounded-xl bg-[#18181b] overflow-hidden border border-[#27272a] shrink-0 relative flex items-center justify-center">
                       <img src={plan.image_data} alt="thumb" className="w-full h-full object-cover" />
                     </div>
                     <div className="overflow-hidden">
-                      <h4 className="font-bold text-white text-sm truncate">{plan.title}</h4>
-                      <p className="text-[10px] text-slate-400 font-mono mt-0.5">Uploaded: {plan.upload_date}</p>
-                      <span className="text-[10px] text-cyan-400 flex items-center gap-1 mt-1">
+                      <h4 className="font-bold text-zinc-100 text-sm truncate">{plan.title}</h4>
+                      <p className="text-[10px] text-zinc-400 font-mono mt-0.5">Uploaded: {plan.upload_date}</p>
+                      <span className="text-[10px] text-emerald-400 flex items-center gap-1 mt-1">
                         <Eye className="w-3 h-3" /> Tap to view
                       </span>
                     </div>
@@ -257,13 +257,13 @@ export default function DietViewer({ onOpenQuickAdd }) {
                   <div className="flex flex-col items-end space-y-2 shrink-0">
                     <button
                       onClick={() => handleSetActive(plan.id)}
-                      className="px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-bold text-[10px] hover:bg-emerald-500/25 transition-all"
+                      className="px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-bold text-[10px] interactive-element"
                     >
                       Set Active
                     </button>
                     <button
                       onClick={() => handleDelete(plan.id)}
-                      className="text-slate-500 hover:text-rose-400 p-1"
+                      className="text-zinc-500 hover:text-red-400 p-1"
                       title="Delete version"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -282,17 +282,17 @@ export default function DietViewer({ onOpenQuickAdd }) {
           onClick={() => setSelectedImage(null)}
           className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/95 backdrop-blur-lg animate-fade-in cursor-zoom-out"
         >
-          <div className="relative max-w-4xl w-full max-h-[95vh] flex flex-col items-center justify-center">
+          <div className="relative max-w-4xl w-full max-h-[95vh] flex flex-col items-center justify-center animate-scale-in">
             <button
               onClick={() => setSelectedImage(null)}
-              className="absolute -top-12 right-2 px-4 py-2 bg-slate-800 border border-white/20 rounded-full text-white font-bold text-xs flex items-center gap-1.5 shadow-xl hover:bg-slate-700"
+              className="absolute -top-12 right-2 px-4 py-2 bg-[#18181b] border border-[#27272a] rounded-full text-zinc-100 font-bold text-xs flex items-center gap-1.5 shadow-xl interactive-element"
             >
               <X className="w-4 h-4" /> Close Viewer
             </button>
-            <div className="overflow-auto max-h-[85vh] w-full rounded-2xl border border-cyan-500/40 bg-[#0b0f19] p-2 flex items-center justify-center shadow-2xl">
+            <div className="overflow-auto max-h-[85vh] w-full rounded-2xl border border-[#27272a] bg-[#121214] p-2 flex items-center justify-center shadow-2xl">
               <img src={selectedImage} alt="Diet Full Viewer" className="max-w-full max-h-[82vh] object-contain rounded-xl" />
             </div>
-            <p className="text-xs text-slate-400 mt-3 font-mono">Pinch to zoom / Drag to pan on mobile screen</p>
+            <p className="text-xs text-zinc-400 mt-3 font-mono">Pinch to zoom / Drag to pan on mobile screen</p>
           </div>
         </div>
       )}

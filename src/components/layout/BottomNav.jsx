@@ -15,7 +15,7 @@ export default function BottomNav({ onOpenQuickAdd }) {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#111827] border-t border-[#1f2937] pb-safe shadow-lg">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#121214] border-t border-[#27272a] pb-safe shadow-2xl transition-all">
       <div className="max-w-md mx-auto px-2 flex items-center justify-around h-16 relative">
         {navItems.map((item) => {
           if (item.isFab) {
@@ -23,7 +23,7 @@ export default function BottomNav({ onOpenQuickAdd }) {
               <div key="quick-add" className="relative -top-4 flex flex-col items-center">
                 <button
                   onClick={onOpenQuickAdd}
-                  className="w-12 h-12 rounded-full bg-emerald-500 hover:bg-emerald-400 flex items-center justify-center text-slate-950 shadow-md active:scale-95 transition-all border-4 border-[#090d16]"
+                  className="w-12 h-12 rounded-full bg-emerald-500 hover:bg-emerald-400 flex items-center justify-center text-zinc-950 shadow-lg interactive-element border-4 border-[#09090b]"
                   title="Quick Add Action"
                 >
                   <Plus className="w-6 h-6 stroke-[2.5]" />
@@ -39,14 +39,17 @@ export default function BottomNav({ onOpenQuickAdd }) {
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center justify-center w-12 py-1 relative transition-all ${
-                isActive ? 'text-emerald-400' : 'text-slate-400 hover:text-slate-200'
+              className={`flex flex-col items-center justify-center w-12 py-1 relative interactive-element ${
+                isActive ? 'text-emerald-400 scale-105' : 'text-zinc-500 hover:text-zinc-300'
               }`}
             >
-              <Icon className={`w-5 h-5 ${isActive ? 'stroke-[2.25] text-emerald-400' : 'stroke-[1.75]'}`} />
-              <span className={`text-[11px] mt-1 tracking-tight ${isActive ? 'text-emerald-400 font-semibold' : 'text-slate-400'}`}>
+              <Icon className={`w-5 h-5 transition-transform ${isActive ? 'stroke-[2.25] text-emerald-400 -translate-y-0.5' : 'stroke-[1.75]'}`} />
+              <span className={`text-[11px] mt-1 tracking-tight transition-colors ${isActive ? 'text-emerald-400 font-bold' : 'text-zinc-500 font-medium'}`}>
                 {item.label}
               </span>
+              {isActive && (
+                <span className="absolute bottom-0 w-4 h-0.5 bg-emerald-400 rounded-full animate-scale-in" />
+              )}
             </button>
           );
         })}
