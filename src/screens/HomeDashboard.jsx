@@ -113,7 +113,7 @@ export default function HomeDashboard({ onOpenQuickAdd }) {
 
             <div className="flex items-baseline space-x-2 my-3">
               <span className="text-3xl font-extrabold font-mono text-zinc-100 tracking-tight">
-                ${monthExpenses.toFixed(2)}
+                ₹{monthExpenses.toFixed(2)}
               </span>
               <span className="text-xs text-zinc-400">spent in {now.toLocaleDateString('en-US', { month: 'short' })}</span>
             </div>
@@ -127,7 +127,7 @@ export default function HomeDashboard({ onOpenQuickAdd }) {
                   <span className="font-mono font-bold text-zinc-100">
                     {Math.ceil((new Date(upcomingSubs[0].next_due_date) - new Date(todayStr)) / (1000 * 60 * 60 * 24))}d
                   </span>{' '}
-                  (${parseFloat(upcomingSubs[0].amount).toFixed(2)})
+                  (₹{parseFloat(upcomingSubs[0].amount).toFixed(2)})
                 </div>
               </div>
             ) : (

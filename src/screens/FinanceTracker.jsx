@@ -97,7 +97,7 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
     labels: Object.keys(categoryTotals).map((k) => categoryMeta[k]?.label || k),
     datasets: [
       {
-        label: 'Spending by Category ($)',
+        label: 'Spending by Category (₹)',
         data: Object.values(categoryTotals),
         backgroundColor: Object.keys(categoryTotals).map((k) => categoryMeta[k]?.color || '#06b6d4'),
         borderRadius: 8
@@ -168,16 +168,16 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
         <div className="grid grid-cols-3 gap-2 sm:flex sm:items-center sm:space-x-3 bg-slate-900 p-2 rounded-2xl border border-[#1f2937]">
           <div className="px-2 text-center sm:text-left">
             <span className="text-[10px] text-slate-400 block">Expense</span>
-            <span className="text-sm sm:text-base font-mono font-bold text-rose-400">${totalExpense.toFixed(0)}</span>
+            <span className="text-sm sm:text-base font-mono font-bold text-rose-400">₹{totalExpense.toFixed(0)}</span>
           </div>
           <div className="px-2 border-x border-[#1f2937] text-center sm:text-left">
             <span className="text-[10px] text-slate-400 block">Income</span>
-            <span className="text-sm sm:text-base font-mono font-bold text-emerald-400">${totalIncome.toFixed(0)}</span>
+            <span className="text-sm sm:text-base font-mono font-bold text-emerald-400">₹{totalIncome.toFixed(0)}</span>
           </div>
           <div className="px-2 text-center sm:text-left">
             <span className="text-[10px] text-slate-400 block">Net</span>
             <span className={`text-sm sm:text-base font-mono font-bold ${netBalance >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
-              ${netBalance.toFixed(0)}
+              ₹{netBalance.toFixed(0)}
             </span>
           </div>
         </div>
@@ -270,7 +270,7 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
 
                     <div className="flex items-center space-x-3 shrink-0">
                       <span className={`font-mono font-extrabold text-base ${isExpense ? 'text-rose-400' : 'text-emerald-400'}`}>
-                        {isExpense ? '-' : '+'}${parseFloat(t.amount).toFixed(2)}
+                        {isExpense ? '-' : '+'}₹{parseFloat(t.amount).toFixed(2)}
                       </span>
                       <button
                         onClick={() => handleDeleteTx(t.id)}
@@ -322,7 +322,7 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-slate-400 block mb-1">Amount ($) *</label>
+                  <label className="text-xs text-slate-400 block mb-1">Amount (₹) *</label>
                   <input
                     type="number"
                     step="0.01"
@@ -396,7 +396,7 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
                         <h4 className="font-bold text-white text-base mt-0.5">{s.name}</h4>
                       </div>
                       <span className="font-mono font-extrabold text-lg text-emerald-400">
-                        ${parseFloat(s.amount).toFixed(2)}
+                        ₹{parseFloat(s.amount).toFixed(2)}
                       </span>
                     </div>
 

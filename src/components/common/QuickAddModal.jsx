@@ -183,7 +183,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <label className="text-xs text-zinc-400 font-medium block mb-1">Amount ($)</label>
+                <label className="text-xs text-zinc-400 font-medium block mb-1">Amount (₹)</label>
                 <input
                   type="number"
                   step="0.01"
