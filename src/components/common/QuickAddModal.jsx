@@ -114,12 +114,12 @@ export default function QuickAddModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-      <div className="w-full max-w-lg glass-card bg-[#0b0f19]/95 border-t sm:border border-white/10 rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 animate-fade-in">
+      <div className="w-full max-w-lg bg-[#111827] border-t sm:border border-[#1f2937] rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
         {/* Modal Header */}
-        <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between">
+        <div className="px-5 py-4 border-b border-[#1f2937] flex items-center justify-between">
           <h3 className="font-bold text-lg text-white font-['Outfit'] flex items-center gap-2">
-            <Plus className="w-5 h-5 text-cyan-400 stroke-[2.5]" />
+            <Plus className="w-5 h-5 text-emerald-400 stroke-[2.5]" />
             Quick Add
           </h3>
           <button
@@ -131,12 +131,12 @@ export default function QuickAddModal({ isOpen, onClose }) {
         </div>
 
         {/* Module Selector Tabs */}
-        <div className="grid grid-cols-4 p-2 gap-1.5 bg-slate-900/60 border-b border-white/10">
+        <div className="grid grid-cols-4 p-2 gap-1.5 bg-slate-900 border-b border-[#1f2937]">
           {[
-            { id: 'transaction', label: 'Finance', icon: DollarSign, color: 'text-emerald-400' },
-            { id: 'task', label: 'Task', icon: CheckSquare, color: 'text-purple-400' },
-            { id: 'workout', label: 'Gym', icon: Dumbbell, color: 'text-amber-400' },
-            { id: 'diet', label: 'Diet Plan', icon: Utensils, color: 'text-cyan-400' }
+            { id: 'transaction', label: 'Finance', icon: DollarSign },
+            { id: 'task', label: 'Task', icon: CheckSquare },
+            { id: 'workout', label: 'Gym', icon: Dumbbell },
+            { id: 'diet', label: 'Diet Plan', icon: Utensils }
           ].map((t) => {
             const Icon = t.icon;
             const isActive = tab === t.id;
@@ -146,11 +146,11 @@ export default function QuickAddModal({ isOpen, onClose }) {
                 onClick={() => setTab(t.id)}
                 className={`py-2 px-1 rounded-xl text-xs font-medium flex flex-col sm:flex-row items-center justify-center gap-1.5 transition-all ${
                   isActive
-                    ? 'bg-slate-800 border border-white/15 text-white shadow-md font-semibold'
-                    : 'text-slate-400 hover:bg-slate-800/40 hover:text-slate-200'
+                    ? 'bg-slate-800 border border-[#1f2937] text-emerald-400 font-semibold'
+                    : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? t.color : 'text-slate-400'}`} />
+                <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-400' : 'text-slate-400'}`} />
                 <span>{t.label}</span>
               </button>
             );
@@ -161,12 +161,12 @@ export default function QuickAddModal({ isOpen, onClose }) {
         <form onSubmit={handleSubmit} className="p-5 overflow-y-auto space-y-4 flex-1">
           {tab === 'transaction' && (
             <>
-              <div className="flex bg-slate-800/80 p-1 rounded-xl border border-white/10">
+              <div className="flex bg-slate-900 p-1 rounded-xl border border-[#1f2937]">
                 <button
                   type="button"
                   onClick={() => setTxType('expense')}
                   className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
-                    txType === 'expense' ? 'bg-rose-500 text-white shadow-md' : 'text-slate-400'
+                    txType === 'expense' ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40' : 'text-slate-400'
                   }`}
                 >
                   Expense (-)
@@ -175,7 +175,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
                   type="button"
                   onClick={() => setTxType('income')}
                   className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
-                    txType === 'income' ? 'bg-emerald-500 text-white shadow-md' : 'text-slate-400'
+                    txType === 'income' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'text-slate-400'
                   }`}
                 >
                   Income (+)
@@ -191,7 +191,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
                   placeholder="0.00"
                   value={txAmount}
                   onChange={(e) => setTxAmount(e.target.value)}
-                  className="w-full bg-slate-900/90 border border-white/10 rounded-xl px-4 py-3 text-lg font-bold text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-4 py-3 text-lg font-bold text-white focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
@@ -201,7 +201,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
                   <select
                     value={txCategory}
                     onChange={(e) => setTxCategory(e.target.value)}
-                    className="w-full bg-slate-900/90 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500"
+                    className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
                   >
                     <option value="food">🍔 Food & Dining</option>
                     <option value="transport">🚗 Transport</option>
@@ -218,7 +218,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
                     type="date"
                     value={txDate}
                     onChange={(e) => setTxDate(e.target.value)}
-                    className="w-full bg-slate-900/90 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500"
+                    className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
@@ -227,10 +227,10 @@ export default function QuickAddModal({ isOpen, onClose }) {
                 <label className="text-xs text-slate-400 font-medium block mb-1">Note (Optional)</label>
                 <input
                   type="text"
-                  placeholder="e.g. Lunch with colleagues"
+                  placeholder="e.g. Groceries"
                   value={txNote}
                   onChange={(e) => setTxNote(e.target.value)}
-                  className="w-full bg-slate-900/90 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
                 />
               </div>
             </>
@@ -246,7 +246,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
                   placeholder="What needs to be done?"
                   value={taskTitle}
                   onChange={(e) => setTaskTitle(e.target.value)}
-                  className="w-full bg-slate-900/90 border border-white/10 rounded-xl px-4 py-3 text-base font-semibold text-white focus:outline-none focus:border-purple-500"
+                  className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-4 py-3 text-base font-semibold text-white focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
@@ -257,7 +257,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
                     type="date"
                     value={taskDate}
                     onChange={(e) => setTaskDate(e.target.value)}
-                    className="w-full bg-slate-900/90 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500"
+                    className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
                   />
                 </div>
                 <div>
@@ -265,7 +265,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
                   <select
                     value={taskPriority}
                     onChange={(e) => setTaskPriority(e.target.value)}
-                    className="w-full bg-slate-900/90 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500"
+                    className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
                   >
                     <option value="high">🔥 High Priority</option>
                     <option value="medium">⚡ Medium Priority</option>
@@ -281,7 +281,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
                   placeholder="Add extra notes or sub-tasks..."
                   value={taskDesc}
                   onChange={(e) => setTaskDesc(e.target.value)}
-                  className="w-full bg-slate-900/90 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500"
+                  className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
                 />
               </div>
             </>
@@ -297,7 +297,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
                   placeholder="e.g. Barbell Squat, Bench Press, Pull-ups"
                   value={exerciseName}
                   onChange={(e) => setExerciseName(e.target.value)}
-                  className="w-full bg-slate-900/90 border border-white/10 rounded-xl px-4 py-3 text-base font-semibold text-white focus:outline-none focus:border-amber-500"
+                  className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-4 py-3 text-base font-semibold text-white focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
@@ -307,7 +307,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
                   <button
                     type="button"
                     onClick={handleAddSet}
-                    className="text-xs font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1"
+                    className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1"
                   >
                     <Plus className="w-3.5 h-3.5" /> Add Set
                   </button>
@@ -315,7 +315,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
 
                 <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
                   {sets.map((s, idx) => (
-                    <div key={idx} className="flex items-center space-x-2 bg-slate-900/80 p-2 rounded-xl border border-white/10">
+                    <div key={idx} className="flex items-center space-x-2 bg-slate-900 p-2 rounded-xl border border-[#1f2937]">
                       <span className="w-6 text-center text-xs font-mono font-bold text-slate-400">#{idx + 1}</span>
                       <div className="flex-1 flex items-center space-x-1">
                         <input
@@ -323,7 +323,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
                           placeholder="Reps"
                           value={s.reps}
                           onChange={(e) => handleUpdateSet(idx, 'reps', e.target.value)}
-                          className="w-20 bg-slate-800 border border-white/10 rounded-lg px-2 py-1.5 text-sm text-center text-white font-mono"
+                          className="w-20 bg-slate-800 border border-[#1f2937] rounded-lg px-2 py-1.5 text-sm text-center text-white font-mono"
                         />
                         <span className="text-xs text-slate-500">reps</span>
                       </div>
@@ -334,7 +334,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
                           placeholder="Weight"
                           value={s.weight}
                           onChange={(e) => handleUpdateSet(idx, 'weight', e.target.value)}
-                          className="w-20 bg-slate-800 border border-white/10 rounded-lg px-2 py-1.5 text-sm text-center text-white font-mono"
+                          className="w-20 bg-slate-800 border border-[#1f2937] rounded-lg px-2 py-1.5 text-sm text-center text-white font-mono"
                         />
                         <span className="text-xs text-slate-500">kg</span>
                       </div>
@@ -360,16 +360,16 @@ export default function QuickAddModal({ isOpen, onClose }) {
                 <label className="text-xs text-slate-400 font-medium block mb-1">Plan Title / Notes</label>
                 <input
                   type="text"
-                  placeholder="e.g. Summer Shred Macro Chart"
+                  placeholder="e.g. Macro Chart"
                   value={dietTitle}
                   onChange={(e) => setDietTitle(e.target.value)}
-                  className="w-full bg-slate-900/90 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full bg-slate-900 border border-[#1f2937] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
               <div>
                 <label className="text-xs text-slate-400 font-medium block mb-1.5">Upload Diet Chart / Sheet Photo *</label>
-                <div className="border-2 border-dashed border-white/20 rounded-2xl p-4 text-center bg-slate-900/50 hover:bg-slate-900/80 transition-all cursor-pointer relative">
+                <div className="border-2 border-dashed border-[#1f2937] rounded-2xl p-4 text-center bg-slate-900 hover:bg-slate-800 transition-all cursor-pointer relative">
                   <input
                     type="file"
                     accept="image/*"
@@ -379,16 +379,16 @@ export default function QuickAddModal({ isOpen, onClose }) {
                   />
                   {dietImageBase64 ? (
                     <div className="space-y-2">
-                      <img src={dietImageBase64} alt="Diet Preview" className="max-h-36 mx-auto rounded-xl object-contain border border-white/10" />
+                      <img src={dietImageBase64} alt="Diet Preview" className="max-h-36 mx-auto rounded-xl object-contain border border-[#1f2937]" />
                       <p className="text-xs text-emerald-400 font-medium">✓ Image loaded ready to save</p>
                     </div>
                   ) : (
                     <div className="py-4 space-y-2">
-                      <div className="w-12 h-12 rounded-full bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mx-auto text-cyan-400">
+                      <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto text-emerald-400">
                         <Camera className="w-6 h-6" />
                       </div>
                       <p className="text-xs text-slate-300 font-medium">Tap to upload from Gallery or take Photo</p>
-                      <p className="text-[10px] text-slate-500">Supports JPG, PNG, WEBP, SVG</p>
+                      <p className="text-[10px] text-slate-500">Supports JPG, PNG, WEBP</p>
                     </div>
                   )}
                 </div>
@@ -400,7 +400,7 @@ export default function QuickAddModal({ isOpen, onClose }) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 bg-gradient-to-r from-cyan-500 via-emerald-500 to-purple-500 text-slate-950 font-extrabold rounded-2xl shadow-lg hover:brightness-110 active:scale-98 transition-all flex items-center justify-center space-x-2 text-sm mt-4"
+            className="w-full py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold rounded-2xl shadow-md active:scale-95 transition-all flex items-center justify-center space-x-2 text-sm mt-4"
           >
             <span>{loading ? 'Saving to Database...' : `Save ${tab.charAt(0).toUpperCase() + tab.slice(1)}`}</span>
           </button>

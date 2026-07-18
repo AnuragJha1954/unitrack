@@ -76,20 +76,20 @@ export default function DietViewer({ onOpenQuickAdd }) {
   return (
     <div className="space-y-6 pb-24 px-4 max-w-4xl mx-auto pt-2 animate-fade-in">
       {/* Module Header */}
-      <div className="glass-card rounded-3xl p-5 border border-cyan-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[#111827] rounded-3xl p-5 border border-[#1f2937] flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
         <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 rounded-2xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
             <Utensils className="w-6 h-6" />
           </div>
           <div>
             <h2 className="text-xl sm:text-2xl font-extrabold font-['Outfit'] text-white">Diet Plan & Macro Viewer</h2>
-            <p className="text-xs text-slate-400">Upload and carry your nutritionist diet schedules anywhere offline.</p>
+            <p className="text-xs text-slate-400">Upload and access your nutritionist diet schedules anytime offline.</p>
           </div>
         </div>
 
         <button
           onClick={() => setShowUploadForm(!showUploadForm)}
-          className="px-4 py-2.5 bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-xs rounded-2xl shadow-lg neon-glow-cyan hover:brightness-110 active:scale-95 transition-all flex items-center justify-center space-x-2 shrink-0"
+          className="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-2xl shadow-sm active:scale-95 transition-all flex items-center justify-center space-x-2 shrink-0"
         >
           <Plus className="w-4 h-4 stroke-[2.5]" />
           <span>{showUploadForm ? 'Close Upload Form' : 'Upload Diet Plan'}</span>

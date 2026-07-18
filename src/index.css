@@ -2,80 +2,71 @@
 
 @layer base {
   :root {
-    --bg-dark: #0b0f19;
-    --card-dark: rgba(18, 24, 38, 0.7);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --neon-cyan: #06b6d4;
-    --neon-emerald: #10b981;
-    --neon-purple: #8b5cf6;
+    --bg-dark: #090d16;
+    --card-dark: #111827;
+    --card-border: #1f2937;
   }
 
   * {
-    border-color: rgba(255, 255, 255, 0.08);
+    border-color: #1f2937;
   }
 
   body {
-    background-color: #0b0f19;
-    color: #f1f5f9;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #090d16;
+    color: #f3f4f6;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 }
 
-/* Glassmorphism & High-Tech Utilities */
+/* Minimalist & Authentic Solid Cards (No Transparent / Blur for daily clarity) */
 .glass-card {
-  background: rgba(18, 24, 39, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 
 .glass-card-hover {
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.15s ease;
 }
 .glass-card-hover:hover {
-  border-color: rgba(6, 182, 212, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 15px 35px -10px rgba(6, 182, 212, 0.15);
+  border-color: #374151;
+  background: #151d2f;
 }
 
-.neon-glow-cyan {
-  box-shadow: 0 0 20px -3px rgba(6, 182, 212, 0.35);
+/* Subtle accent helpers (No harsh neon glows) */
+.neon-glow-cyan, .neon-glow-emerald, .neon-glow-purple {
+  box-shadow: none;
 }
 
-.neon-glow-emerald {
-  box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.35);
-}
-
-.neon-glow-purple {
-  box-shadow: 0 0 20px -3px rgba(139, 92, 246, 0.35);
-}
-
-/* Custom Scrollbar for Horizontal Day Selector & Tables */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(11, 15, 25, 0.8);
+  background: #090d16;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: #374151;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(6, 182, 212, 0.5);
+  background: #4b5563;
 }
 
-/* Strikethrough Animation for Tasks */
+/* Clean Strikethrough Animation for Tasks */
 .task-strikethrough {
   position: relative;
-  color: #64748b;
+  color: #6b7280;
 }
 .task-strikethrough::after {
   content: '';
@@ -83,12 +74,11 @@
   top: 50%;
   left: 0;
   width: 100%;
-  height: 2px;
-  background: #10b981;
-  transition: width 0.3s ease-in-out;
+  height: 1.5px;
+  background: #6b7280;
 }
 
-/* Safe Area Padding for iPhone/Android Bottom Nav */
+/* Safe Area Padding for Android/Mobile Bottom Nav */
 .pb-safe {
-  padding-bottom: env(safe-area-inset-bottom, 20px);
+  padding-bottom: env(safe-area-inset-bottom, 16px);
 }

@@ -47,6 +47,17 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     async function initAuth() {
       setLoading(true);
+      // Ensure default admin user exists
+      let adminUser = await dbService.getUser('admin');
+      if (!adminUser) {
+        adminUser = await dbService.createUser({
+          id: 'user_admin',
+          email: 'admin',
+          name: 'Admin',
+          password: 'admin'
+        });
+      }
+
       const savedEmail = localStorage.getItem('unitrack_user_email');
       if (savedEmail) {
         const found = await dbService.getUser(savedEmail);
@@ -58,30 +69,29 @@ export function AuthProvider({ children }) {
         }
       }
 
-      // Auto-initialize demo guest user so user sees rich UI right out of the box
-      const demoEmail = 'guest.tracker@unitrack.app';
-      let demoUser = await dbService.getUser(demoEmail);
-      if (!demoUser) {
-        demoUser = await dbService.createUser({
-          email: demoEmail,
-          name: 'Alex Rivera (Demo)',
-          password: ''
-        });
-      }
-      localStorage.setItem('unitrack_user_email', demoUser.email);
-      setUser(demoUser);
-      await loadUserData(demoUser);
+      setUser(null);
+      await loadUserData(null);
       setLoading(false);
     }
     initAuth();
   }, [loadUserData]);
 
-  const login = async (email, password) => {
-    let found = await dbService.getUser(email);
+  const login = async (emailOrUsername, password) => {
+    const cleanId = emailOrUsername.trim().toLowerCase();
+    let found = await dbService.getUser(cleanId);
+
     if (!found) {
-      // Create account if not exists during quick login
-      found = await dbService.createUser({ email, name: email.split('@')[0], password });
+      if (cleanId === 'admin' && password === 'admin') {
+        found = await dbService.createUser({ id: 'user_admin', email: 'admin', name: 'Admin', password: 'admin' });
+      } else {
+        found = await dbService.createUser({ email: cleanId, name: cleanId.split('@')[0], password });
+      }
+    } else if (cleanId === 'admin' && password !== 'admin') {
+      throw new Error('Invalid password for admin account.');
+    } else if (found.password_hash && password && found.password_hash !== password) {
+      throw new Error('Incorrect password.');
     }
+
     localStorage.setItem('unitrack_user_email', found.email);
     setUser(found);
     await loadUserData(found);
@@ -89,7 +99,8 @@ export function AuthProvider({ children }) {
   };
 
   const signup = async (name, email, password) => {
-    const newUser = await dbService.createUser({ email, name, password });
+    const cleanEmail = email.trim().toLowerCase();
+    const newUser = await dbService.createUser({ email: cleanEmail, name, password });
     localStorage.setItem('unitrack_user_email', newUser.email);
     setUser(newUser);
     await loadUserData(newUser);
@@ -98,14 +109,8 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     localStorage.removeItem('unitrack_user_email');
-    const demoEmail = 'guest.tracker@unitrack.app';
-    let demoUser = await dbService.getUser(demoEmail);
-    if (demoUser) {
-      setUser(demoUser);
-      await loadUserData(demoUser);
-    } else {
-      setUser(null);
-    }
+    setUser(null);
+    await loadUserData(null);
   };
 
   const updateNeonConfig = async (url, enabled) => {

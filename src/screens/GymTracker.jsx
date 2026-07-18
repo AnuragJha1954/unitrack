@@ -159,9 +159,9 @@ export default function GymTracker() {
   return (
     <div className="space-y-5 pb-24 px-4 max-w-4xl mx-auto pt-2 animate-fade-in">
       {/* Module Banner */}
-      <div className="glass-card rounded-3xl p-5 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[#111827] rounded-3xl p-5 border border-[#1f2937] flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
         <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
             <Dumbbell className="w-6 h-6" />
           </div>
           <div>
@@ -170,8 +170,8 @@ export default function GymTracker() {
           </div>
         </div>
 
-        <div className="flex items-center space-x-3 bg-slate-900/80 p-2.5 rounded-2xl border border-white/10 shrink-0">
-          <Award className="w-5 h-5 text-amber-400" />
+        <div className="flex items-center space-x-3 bg-slate-900 p-2.5 rounded-2xl border border-[#1f2937] shrink-0">
+          <Award className="w-5 h-5 text-emerald-400" />
           <div>
             <span className="text-[10px] text-slate-400 block font-medium uppercase">Total Sessions</span>
             <span className="text-sm font-mono font-bold text-white">{workouts.length} Workouts Logged</span>

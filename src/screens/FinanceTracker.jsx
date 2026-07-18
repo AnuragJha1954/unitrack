@@ -154,9 +154,9 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
   return (
     <div className="space-y-5 pb-24 px-4 max-w-4xl mx-auto pt-2 animate-fade-in">
       {/* Module Title & Stats Bar */}
-      <div className="glass-card rounded-3xl p-5 border border-emerald-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[#111827] rounded-3xl p-5 border border-[#1f2937] flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
         <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
             <Wallet className="w-6 h-6" />
           </div>
           <div>
@@ -165,18 +165,18 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-2 sm:flex sm:items-center sm:space-x-3 bg-slate-900/80 p-2 rounded-2xl border border-white/10">
+        <div className="grid grid-cols-3 gap-2 sm:flex sm:items-center sm:space-x-3 bg-slate-900 p-2 rounded-2xl border border-[#1f2937]">
           <div className="px-2 text-center sm:text-left">
             <span className="text-[10px] text-slate-400 block">Expense</span>
             <span className="text-sm sm:text-base font-mono font-bold text-rose-400">${totalExpense.toFixed(0)}</span>
           </div>
-          <div className="px-2 border-x border-white/10 text-center sm:text-left">
+          <div className="px-2 border-x border-[#1f2937] text-center sm:text-left">
             <span className="text-[10px] text-slate-400 block">Income</span>
             <span className="text-sm sm:text-base font-mono font-bold text-emerald-400">${totalIncome.toFixed(0)}</span>
           </div>
           <div className="px-2 text-center sm:text-left">
             <span className="text-[10px] text-slate-400 block">Net</span>
-            <span className={`text-sm sm:text-base font-mono font-bold ${netBalance >= 0 ? 'text-cyan-400' : 'text-rose-400'}`}>
+            <span className={`text-sm sm:text-base font-mono font-bold ${netBalance >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
               ${netBalance.toFixed(0)}
             </span>
           </div>

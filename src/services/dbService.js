@@ -112,8 +112,6 @@ class DBService {
       [newUser.id, newUser.email, newUser.name, newUser.password_hash, newUser.created_at]
     );
 
-    // Seed initial demo data for new users
-    await this.seedDemoData(newUser.id);
     return newUser;
   }
 
@@ -377,73 +375,6 @@ class DBService {
     await this.runNeonQuery('DELETE FROM diet_plans WHERE id = $1', [id]);
   }
 
-  // ==========================================
-  // DEMO DATA SEEDER
-  // ==========================================
-  async seedDemoData(userId) {
-    const today = new Date();
-    const fmt = (d) => d.toISOString().split('T')[0];
-    const addDays = (days) => {
-      const dt = new Date(today);
-      dt.setDate(dt.getDate() + days);
-      return fmt(dt);
-    };
-
-    // Check if already seeded
-    const existingTx = await localDB.transactions.where('user_id').equals(userId).count();
-    if (existingTx > 0) return;
-
-    // Seed Transactions
-    await this.addTransaction({ userId, amount: 45.50, category: 'food', date: addDays(0), note: 'High-protein lunch bowl' });
-    await this.addTransaction({ userId, amount: 18.00, category: 'transport', date: addDays(-1), note: 'Uber cab ride' });
-    await this.addTransaction({ userId, amount: 120.00, category: 'shopping', date: addDays(-2), note: 'Gym apparel & resistance bands' });
-    await this.addTransaction({ userId, amount: 65.00, category: 'bills', date: addDays(-3), note: 'Monthly internet & electricity' });
-
-    // Seed Subscriptions (with one renewing in 2 days to test the Reminder Alert badge!)
-    await this.addSubscription({ userId, name: 'Spotify Premium', amount: 11.99, billingCycle: 'monthly', nextDueDate: addDays(2), remindDays: 3 });
-    await this.addSubscription({ userId, name: 'Gold Gym Membership', amount: 49.99, billingCycle: 'monthly', nextDueDate: addDays(12), remindDays: 5 });
-    await this.addSubscription({ userId, name: 'Neon Pro Cloud', amount: 19.00, billingCycle: 'monthly', nextDueDate: addDays(25), remindDays: 3 });
-
-    // Seed Tasks
-    await this.addTask({ userId, title: 'Complete 45m Leg Day Session', description: 'Focus on deep squats and lunges', dueDate: addDays(0), priority: 'high' });
-    await this.addTask({ userId, title: 'Prep clean meal containers for the week', description: 'Chicken breast, quinoa, and broccoli', dueDate: addDays(0), priority: 'medium' });
-    await this.addTask({ userId, title: 'Review monthly subscription renewals', description: 'Cancel unused services before auto-bill', dueDate: addDays(1), priority: 'low' });
-    await this.addTask({ userId, title: 'Upload new nutritionist diet schedule', description: 'Waiting for macro update sheet', dueDate: addDays(-1), priority: 'high' });
-
-    // Seed Gym Progressive Overload (Bench Press progression across 4 sessions)
-    await this.logWorkout({
-      userId, date: addDays(-10), exerciseName: 'Bench Press',
-      sets: [{ reps: 10, weight: 60 }, { reps: 8, weight: 65 }, { reps: 6, weight: 70 }]
-    });
-    await this.logWorkout({
-      userId, date: addDays(-7), exerciseName: 'Bench Press',
-      sets: [{ reps: 10, weight: 62.5 }, { reps: 8, weight: 67.5 }, { reps: 6, weight: 72.5 }]
-    });
-    await this.logWorkout({
-      userId, date: addDays(-4), exerciseName: 'Bench Press',
-      sets: [{ reps: 10, weight: 65 }, { reps: 8, weight: 70 }, { reps: 6, weight: 75 }]
-    });
-    await this.logWorkout({
-      userId, date: addDays(-1), exerciseName: 'Bench Press',
-      sets: [{ reps: 10, weight: 67.5 }, { reps: 8, weight: 72.5 }, { reps: 6, weight: 77.5 }]
-    });
-
-    await this.logWorkout({
-      userId, date: addDays(-2), exerciseName: 'Barbell Squat',
-      sets: [{ reps: 10, weight: 80 }, { reps: 8, weight: 90 }, { reps: 8, weight: 95 }]
-    });
-
-    // Seed Sample Diet Chart SVG converted to data URL
-    const svgDiet = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800" fill="%230b0f19"><rect width="600" height="800" rx="20" fill="%23121827"/><text x="300" y="70" fill="%2306b6d4" font-family="sans-serif" font-size="32" font-weight="bold" text-anchor="middle">MACRO & DIET PLAN</text><line x1="50" y1="90" x2="550" y2="90" stroke="%2306b6d4" stroke-width="2"/><text x="60" y="150" fill="%2310b981" font-family="sans-serif" font-size="22" font-weight="bold">BREAKFAST (8:00 AM)</text><text x="60" y="185" fill="%23f1f5f9" font-family="sans-serif" font-size="18">• 3 Whole Eggs + 2 Egg Whites Scrambled</text><text x="60" y="215" fill="%23f1f5f9" font-family="sans-serif" font-size="18">• 60g Rolled Oats with Blueberries & Chia Seeds</text><text x="60" y="290" fill="%2310b981" font-family="sans-serif" font-size="22" font-weight="bold">LUNCH (1:00 PM)</text><text x="60" y="325" fill="%23f1f5f9" font-family="sans-serif" font-size="18">• 200g Grilled Chicken Breast / Tofu</text><text x="60" y="355" fill="%23f1f5f9" font-family="sans-serif" font-size="18">• 150g Cooked Jasmine Rice + Steamed Broccoli</text><text x="60" y="385" fill="%23f1f5f9" font-family="sans-serif" font-size="18">• 1 tbsp Extra Virgin Olive Oil</text><text x="60" y="460" fill="%2310b981" font-family="sans-serif" font-size="22" font-weight="bold">PRE-WORKOUT (4:30 PM)</text><text x="60" y="495" fill="%23f1f5f9" font-family="sans-serif" font-size="18">• 1 Banana + 1 Scoop Whey Protein Isolate</text><text x="60" y="525" fill="%23f1f5f9" font-family="sans-serif" font-size="18">• Black Coffee / Green Tea</text><text x="60" y="600" fill="%2310b981" font-family="sans-serif" font-size="22" font-weight="bold">DINNER (8:30 PM)</text><text x="60" y="635" fill="%23f1f5f9" font-family="sans-serif" font-size="18">• 200g Baked Salmon or Lean Turkey</text><text x="60" y="665" fill="%23f1f5f9" font-family="sans-serif" font-size="18">• Large Green Salad with Avocado & Quinoa</text><rect x="50" y="720" width="500" height="50" rx="10" fill="rgba(6,182,212,0.15)"/><text x="300" y="752" fill="%2306b6d4" font-family="sans-serif" font-size="18" font-weight="bold" text-anchor="middle">Target: 2,450 kcal | 185g Protein | 240g Carbs | 70g Fat</text></svg>`;
-
-    await this.uploadDietPlan({
-      userId,
-      title: 'High Protein Cutting Plan v2',
-      imageData: svgDiet,
-      uploadDate: fmt(today),
-      isActive: true
-    });
-  }
 }
 
 export const dbService = new DBService();
