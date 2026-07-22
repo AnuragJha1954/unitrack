@@ -23,7 +23,7 @@ export default function BottomNav({ onOpenQuickAdd }) {
   };
 
   return (
-    <nav className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-auto sm:w-[520px] sm:left-1/2 sm:-translate-x-1/2 z-40 bg-[#09090b]/80 backdrop-blur-3xl border border-white/[0.06] rounded-full shadow-[0_20px_60px_-10px_rgba(0,0,0,0.95)] h-16 transition-all px-3 flex items-center justify-around font-sans">
+    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-[540px] z-40 bg-[#09090b]/85 backdrop-blur-3xl border border-white/[0.08] rounded-full shadow-[0_20px_60px_-10px_rgba(0,0,0,0.95)] h-16 transition-all px-3 flex items-center justify-around font-sans">
       {navItems.map((item) => {
         if (item.isAction) {
           return (
