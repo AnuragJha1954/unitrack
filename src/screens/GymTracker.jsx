@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { dbService } from '../services/dbService';
 import {
   Dumbbell,
+  Utensils,
   Plus,
   Trash2,
   Calendar,
@@ -39,7 +40,7 @@ ChartJS.register(
 );
 
 export default function GymTracker() {
-  const { user, workouts, refreshAll } = useAuth();
+  const { user, workouts, refreshAll, setActiveTab } = useAuth();
   const [subTab, setSubTab] = useState('log'); // 'log', 'progress', 'history'
 
   // Log form state
@@ -155,7 +156,27 @@ export default function GymTracker() {
   };
 
   return (
-    <div className="space-y-5 pb-24 px-4 max-w-4xl mx-auto pt-2 animate-fade-in">
+    <div className="space-y-5 pb-28 px-4 max-w-4xl mx-auto pt-2 animate-fade-in font-sans">
+      {/* Top Switcher between Gym and Diet */}
+      <div className="flex items-center justify-center">
+        <div className="flex items-center space-x-1.5 bg-[#121214] p-1.5 rounded-xl border border-[#27272a] shadow-sm">
+          <button
+            onClick={() => {}}
+            className="px-4 py-1.5 rounded-lg text-xs font-extrabold bg-emerald-500 text-zinc-950 flex items-center gap-1.5 shadow-sm"
+          >
+            <Dumbbell className="w-3.5 h-3.5 stroke-[2.5]" />
+            <span>Gym Workouts</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('diet')}
+            className="px-4 py-1.5 rounded-lg text-xs font-bold text-zinc-400 hover:text-white flex items-center gap-1.5 interactive-element"
+          >
+            <Utensils className="w-3.5 h-3.5" />
+            <span>Diet & Macro Storage</span>
+          </button>
+        </div>
+      </div>
+
       {/* Module Banner */}
       <div className="bg-[#111827] rounded-3xl p-5 border border-[#1f2937] flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
         <div className="flex items-center space-x-3">

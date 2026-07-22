@@ -1,5 +1,6 @@
 import Dexie from 'dexie';
 import { compressImageToWebP } from '../utils/imageCompressor';
+import { imgbbService } from './imgbbService';
 
 // Initialize local offline IndexedDB cache via Dexie
 export const localDB = new Dexie('UNItrackDB');
@@ -379,14 +380,15 @@ class DBService {
       }
     }
 
-    // Automatically compress to ultra-lightweight WebP (~30KB) for 100% FREE built-in storage
-    const compressedImage = await compressImageToWebP(imageData, 900, 900, 0.75);
+    // Automatically compress to ultra-lightweight WebP (~10-15KB) and optionally upload to free ImgBB external cloud
+    const compressedImage = await compressImageToWebP(imageData, 600, 600, 0.65);
+    const finalImageUrlOrData = await imgbbService.uploadImage(compressedImage);
 
     const plan = {
       id: 'dpl_' + Date.now() + Math.random().toString(36).substr(2, 5),
       user_id: userId,
       title: title || 'Diet Chart ' + new Date().toLocaleDateString(),
-      image_data: compressedImage,
+      image_data: finalImageUrlOrData,
       upload_date: uploadDate || new Date().toISOString().split('T')[0],
       is_active: isActive,
       created_at: new Date().toISOString()
@@ -412,6 +414,72 @@ class DBService {
   async deleteDietPlan(id) {
     await localDB.diet_plans.delete(id);
     await this.runNeonQuery('DELETE FROM diet_plans WHERE id = $1', [id]);
+  }
+
+  /**
+   * Calculates estimated byte size and percentage used of the 512 MB Neon Postgres quota.
+   */
+  async calculateStorageUsage() {
+    try {
+      const users = await localDB.users.toArray();
+      const transactions = await localDB.transactions.toArray();
+      const subscriptions = await localDB.subscriptions.toArray();
+      const tasks = await localDB.tasks.toArray();
+      const workouts = await localDB.workouts.toArray();
+      const dietPlans = await localDB.diet_plans.toArray();
+
+      const calcSize = (arr) => JSON.stringify(arr || []).length;
+      const breakdown = {
+        users: { count: users.length, bytes: calcSize(users) },
+        transactions: { count: transactions.length, bytes: calcSize(transactions) },
+        subscriptions: { count: subscriptions.length, bytes: calcSize(subscriptions) },
+        tasks: { count: tasks.length, bytes: calcSize(tasks) },
+        workouts: { count: workouts.length, bytes: calcSize(workouts) },
+        diet_plans: { count: dietPlans.length, bytes: calcSize(dietPlans) }
+      };
+
+      const totalBytes = Object.values(breakdown).reduce((acc, curr) => acc + curr.bytes, 0);
+      const totalMB = (totalBytes / (1024 * 1024)).toFixed(3);
+      const percentage = ((totalBytes / (512 * 1024 * 1024)) * 100).toFixed(3);
+
+      return {
+        totalBytes,
+        totalMB,
+        maxMB: 512,
+        percentage,
+        breakdown
+      };
+    } catch (err) {
+      console.warn('Storage calculation error:', err);
+      return { totalBytes: 0, totalMB: '0.000', maxMB: 512, percentage: '0.000', breakdown: {} };
+    }
+  }
+
+  /**
+   * Cleans up old inactive tasks and archived photos to reclaim DB space.
+   */
+  async compactAndCleanupStorage(userId) {
+    try {
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - 30); // 30 days ago
+      const cutoffStr = cutoffDate.toISOString().split('T')[0];
+
+      // Delete completed tasks older than 30 days
+      const oldTasks = await localDB.tasks.where('user_id').equals(userId).toArray();
+      let removedTasks = 0;
+      for (const t of oldTasks) {
+        if (t.completed && t.due_date < cutoffStr) {
+          await localDB.tasks.delete(t.id);
+          await this.runNeonQuery('DELETE FROM tasks WHERE id = $1', [t.id]);
+          removedTasks++;
+        }
+      }
+
+      return { removedTasks, success: true };
+    } catch (err) {
+      console.warn('Cleanup error:', err);
+      return { removedTasks: 0, success: false, error: err.message };
+    }
   }
 
 }

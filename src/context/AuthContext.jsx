@@ -56,28 +56,24 @@ export function AuthProvider({ children }) {
         adminUser = await dbService.createUser({
           id: 'user_admin',
           email: 'admin',
-          name: 'Admin',
+          name: 'Admin User',
           password: 'admin'
         });
       }
 
-      let savedEmail = localStorage.getItem('unitrack_user_email');
-      // If old demo user (guest/Alex) is saved in localStorage or if no account is saved, default to clean Admin account
-      if (!savedEmail || savedEmail === 'guest.tracker@unitrack.app' || savedEmail.toLowerCase().includes('guest') || savedEmail.toLowerCase().includes('alex')) {
-        savedEmail = 'admin';
-        localStorage.setItem('unitrack_user_email', 'admin');
-      }
-
-      const found = await dbService.getUser(savedEmail);
-      if (found) {
-        setUser(found);
-        await loadUserData(found);
+      const savedEmail = localStorage.getItem('unitrack_user_email');
+      // If no session saved or if session is anything other than admin, user must log in
+      if (!savedEmail || savedEmail !== 'admin') {
+        localStorage.removeItem('unitrack_user_email');
+        setUser(null);
+        await loadUserData(null);
         setLoading(false);
         return;
       }
 
-      setUser(adminUser);
-      await loadUserData(adminUser);
+      const found = await dbService.getUser('admin') || adminUser;
+      setUser(found);
+      await loadUserData(found);
       setLoading(false);
     }
     initAuth();
@@ -85,21 +81,18 @@ export function AuthProvider({ children }) {
 
   const login = async (emailOrUsername, password) => {
     const cleanId = emailOrUsername.trim().toLowerCase();
-    let found = await dbService.getUser(cleanId);
-
-    if (!found) {
-      if (cleanId === 'admin' && password === 'admin') {
-        found = await dbService.createUser({ id: 'user_admin', email: 'admin', name: 'Admin', password: 'admin' });
-      } else {
-        found = await dbService.createUser({ email: cleanId, name: cleanId.split('@')[0], password });
-      }
-    } else if (cleanId === 'admin' && password !== 'admin') {
-      throw new Error('Invalid password for admin account.');
-    } else if (found.password_hash && password && found.password_hash !== password) {
-      throw new Error('Incorrect password.');
+    
+    // For now, strictly only 'admin' username and 'admin' password are authorized
+    if (cleanId !== 'admin' || password !== 'admin') {
+      throw new Error('Invalid credentials. Authorized username and password are required.');
     }
 
-    localStorage.setItem('unitrack_user_email', found.email);
+    let found = await dbService.getUser('admin');
+    if (!found) {
+      found = await dbService.createUser({ id: 'user_admin', email: 'admin', name: 'Admin User', password: 'admin' });
+    }
+
+    localStorage.setItem('unitrack_user_email', 'admin');
     setUser(found);
     await loadUserData(found);
     return found;

@@ -3,7 +3,6 @@ import { useAuth } from '../context/AuthContext';
 import { dbService } from '../services/dbService';
 import {
   Wallet,
-  DollarSign,
   Plus,
   Trash2,
   Calendar,
@@ -47,13 +46,13 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
 
   // Category Icon map
   const categoryMeta = {
-    food: { label: 'Food & Dining', icon: '🍔', color: '#10b981' },
-    transport: { label: 'Transport', icon: '🚗', color: '#06b6d4' },
-    shopping: { label: 'Shopping', icon: '🛍️', color: '#8b5cf6' },
-    bills: { label: 'Bills & Utilities', icon: '⚡', color: '#f59e0b' },
-    health: { label: 'Health & Fitness', icon: '💊', color: '#ec4899' },
-    entertainment: { label: 'Entertainment', icon: '🎬', color: '#3b82f6' },
-    other: { label: 'Other', icon: '📦', color: '#64748b' }
+    food: { label: 'Dining & Food', icon: 'DIN', color: '#10b981' },
+    transport: { label: 'Transport', icon: 'TRN', color: '#06b6d4' },
+    shopping: { label: 'Shopping', icon: 'SHP', color: '#8b5cf6' },
+    bills: { label: 'Bills & Utilities', icon: 'BIL', color: '#f59e0b' },
+    health: { label: 'Health & Fitness', icon: 'HLT', color: '#ec4899' },
+    entertainment: { label: 'Entertainment', icon: 'ENT', color: '#3b82f6' },
+    other: { label: 'Other', icon: 'OTH', color: '#64748b' }
   };
 
   // Filter transactions
@@ -186,7 +185,7 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
       {/* Sub-Tabs Selector */}
       <div className="flex bg-[#18181b] p-1.5 rounded-2xl border border-[#27272a] max-w-md mx-auto">
         {[
-          { id: 'transactions', label: 'Transactions', icon: DollarSign },
+          { id: 'transactions', label: 'Transactions', icon: Wallet },
           { id: 'subscriptions', label: 'Subscriptions', icon: RefreshCw },
           { id: 'analytics', label: 'Analytics', icon: PieIcon }
         ].map((tab) => {
@@ -224,9 +223,9 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
                 onChange={(e) => setFilterCategory(e.target.value)}
                 className="bg-slate-900 border border-white/10 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-500"
               >
-                <option value="all">⚡ All Categories</option>
+                <option value="all">All Categories</option>
                 {Object.entries(categoryMeta).map(([k, v]) => (
-                  <option key={k} value={k}>{v.icon} {v.label}</option>
+                  <option key={k} value={k}>{v.label}</option>
                 ))}
               </select>
             </div>
@@ -256,7 +255,7 @@ export default function FinanceTracker({ onOpenQuickAdd }) {
                     className="glass-card glass-card-hover rounded-2xl p-3.5 border border-white/5 flex items-center justify-between gap-3 transition-all"
                   >
                     <div className="flex items-center space-x-3 overflow-hidden">
-                      <div className="w-11 h-11 rounded-2xl bg-slate-800/90 border border-white/10 flex items-center justify-center text-xl shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center text-[11px] font-mono font-extrabold text-zinc-200 tracking-wider shrink-0">
                         {meta.icon}
                       </div>
                       <div className="overflow-hidden">
