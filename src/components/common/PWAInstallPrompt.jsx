@@ -52,31 +52,34 @@ export default function PWAInstallPrompt() {
   if (isInstalled || !showBanner || !deferredPrompt) return null;
 
   return (
-    <div className="fixed bottom-20 left-4 right-4 max-w-md mx-auto z-50 animate-bounce-once">
-      <div className="glass-card bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 border border-cyan-500/40 rounded-2xl p-4 shadow-2xl neon-glow-cyan flex items-center justify-between gap-3">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shrink-0">
-            <Smartphone className="w-6 h-6 animate-pulse" />
+    <div className="fixed bottom-20 left-4 right-4 max-w-md mx-auto z-50 animate-bounce-once font-sans">
+      <div className="bg-[#0e0e11] border border-emerald-500/30 rounded-3xl p-4 shadow-[0_10px_40px_-10px_rgba(16,185,129,0.3)] flex items-center justify-between gap-3 relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute inset-0 bg-emerald-500/5 pointer-events-none" />
+
+        <div className="flex items-center space-x-3 relative z-10">
+          <div className="w-11 h-11 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+            <img src="/logo.png" alt="UNItrack Logo" className="w-6 h-6 object-contain" />
           </div>
           <div>
-            <h4 className="font-bold text-sm text-white flex items-center gap-1.5">
-              Install UNItrack to Android
+            <h4 className="font-extrabold text-sm text-white font-['Outfit'] tracking-tight">
+              Install App
             </h4>
-            <p className="text-xs text-slate-300">Get full-screen mobile app experience offline & fast access.</p>
+            <p className="text-[11px] text-zinc-400 font-mono mt-0.5">Native Android Experience</p>
           </div>
         </div>
 
-        <div className="flex items-center space-x-2 shrink-0">
+        <div className="flex items-center space-x-2 shrink-0 relative z-10">
           <button
             onClick={handleInstallClick}
-            className="px-3 py-1.5 bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-xs rounded-xl shadow-md hover:brightness-110 active:scale-95 transition-all flex items-center space-x-1"
+            className="px-4 py-2 bg-emerald-500 text-zinc-950 font-black text-xs rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.25)] hover:bg-emerald-400 active:scale-95 transition-all flex items-center space-x-1.5 uppercase font-mono tracking-wider"
           >
-            <Download className="w-3.5 h-3.5 stroke-[2.5]" />
+            <Download className="w-3.5 h-3.5 stroke-[3]" />
             <span>Install</span>
           </button>
           <button
             onClick={handleDismiss}
-            className="p-1 text-slate-400 hover:text-white transition-all"
+            className="p-1.5 text-zinc-500 hover:text-white transition-all rounded-lg hover:bg-white/[0.05]"
             title="Dismiss"
           >
             <X className="w-4 h-4" />
